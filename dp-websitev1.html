@@ -1,0 +1,1716 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DocPharma — Rx-Compliant Supply Chain for Digital Health</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --lemon: #c8dba0;
+        --lemon-dim: #8fa86a;
+        --lemon-pale: #3d4a2e;
+        --lemon-ultra: #f2ede3;
+        --white: #faf7f2;
+        --off-white: #f2ede3;
+        --charcoal: #2e3328;
+        --mid: #546048;
+        --light: #8a9478;
+        --border: rgba(90, 122, 58, 0.15);
+        --forest: #3a5c20;
+        --sage: #607d44;
+        --moss: #8fa86a;
+        --mint: #c8dba0;
+        --dark-section: #3d4a2e;
+        --dark-section-alt: #4a5538;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Jost", sans-serif;
+        font-weight: 300;
+        background: var(--white);
+        color: var(--charcoal);
+        overflow-x: hidden;
+      }
+
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 60px;
+        height: 64px;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+      }
+      .logo-mark {
+        width: 30px;
+        height: 30px;
+        background: var(--forest);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.9rem;
+        color: var(--mint);
+      }
+      .logo-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.3rem;
+        color: var(--charcoal);
+        letter-spacing: 0.02em;
+      }
+      .nav-links {
+        display: flex;
+        gap: 36px;
+        align-items: center;
+      }
+      .nav-links a {
+        text-decoration: none;
+        font-size: 0.82rem;
+        font-weight: 400;
+        color: var(--light);
+        letter-spacing: 0.04em;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--charcoal);
+      }
+      .nav-cta {
+        background: var(--forest) !important;
+        color: var(--mint) !important;
+        padding: 9px 20px;
+        border-radius: 6px;
+        font-weight: 400 !important;
+      }
+      .nav-cta:hover {
+        background: var(--dark-section) !important;
+      }
+
+      /* HERO */
+      #hero {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 120px 60px 80px;
+        gap: 80px;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background: radial-gradient(
+          ellipse 55% 55% at 75% 40%,
+          rgba(200, 232, 74, 0.1) 0%,
+          transparent 70%
+        );
+      }
+      .hero-left {
+        position: relative;
+        z-index: 1;
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(58, 92, 32, 0.08);
+        border: 1px solid rgba(58, 92, 32, 0.2);
+        color: var(--forest);
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 400;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        margin-bottom: 28px;
+        animation: fadeUp 0.7s ease both;
+      }
+      .badge-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--moss);
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+        font-weight: 400;
+        line-height: 1.15;
+        color: var(--charcoal);
+        letter-spacing: 0.01em;
+        animation: fadeUp 0.7s 0.1s ease both;
+      }
+      .h1-accent {
+        color: var(--sage);
+      }
+      .hero-sub {
+        margin-top: 22px;
+        font-size: 1rem;
+        line-height: 1.8;
+        color: var(--light);
+        max-width: 440px;
+        font-weight: 300;
+        animation: fadeUp 0.7s 0.2s ease both;
+      }
+      .hero-actions {
+        margin-top: 36px;
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        animation: fadeUp 0.7s 0.3s ease both;
+      }
+      .btn-primary {
+        background: var(--forest);
+        color: var(--mint);
+        padding: 12px 26px;
+        border-radius: 6px;
+        font-weight: 400;
+        font-size: 0.85rem;
+        text-decoration: none;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        transition: all 0.2s;
+        border: 2px solid var(--forest);
+      }
+      .btn-primary:hover {
+        background: var(--sage);
+        border-color: var(--sage);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(45, 80, 22, 0.25);
+      }
+      .btn-ghost {
+        color: var(--charcoal);
+        font-weight: 400;
+        font-size: 0.85rem;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        letter-spacing: 0.04em;
+        border: 2px solid var(--border);
+        padding: 12px 22px;
+        border-radius: 6px;
+        transition: all 0.2s;
+      }
+      .btn-ghost:hover {
+        border-color: var(--charcoal);
+      }
+
+      /* HERO VISUAL */
+      .hero-right {
+        position: relative;
+        z-index: 1;
+      }
+      .hero-visual {
+        background: var(--off-white);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 28px;
+      }
+      .visual-label {
+        font-size: 0.65rem;
+        font-weight: 400;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--light);
+        margin-bottom: 16px;
+      }
+      .chain-node {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        background: white;
+        border-radius: 9px;
+        border: 1px solid var(--border);
+        margin-bottom: 4px;
+        transition: all 0.25s;
+      }
+      .chain-node:hover {
+        border-color: var(--lemon-dim);
+        transform: translateX(3px);
+      }
+      .node-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: rgba(58, 92, 32, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        flex-shrink: 0;
+      }
+      .node-info {
+        flex: 1;
+      }
+      .node-title {
+        font-weight: 400;
+        font-size: 0.85rem;
+        color: var(--charcoal);
+      }
+      .node-desc {
+        font-size: 0.7rem;
+        color: var(--light);
+        margin-top: 1px;
+      }
+      .node-status {
+        font-size: 0.65rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--moss);
+        background: rgba(143, 168, 106, 0.15);
+        padding: 3px 9px;
+        border-radius: 20px;
+      }
+      .chain-connector {
+        width: 2px;
+        height: 8px;
+        background: var(--sand);
+        margin-left: 34px;
+      }
+      .visual-footer {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+      }
+      .vis-stat {
+        text-align: center;
+      }
+      .vis-stat-n {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.3rem;
+        color: var(--charcoal);
+      }
+      .vis-stat-l {
+        font-size: 0.65rem;
+        color: var(--light);
+        margin-top: 2px;
+      }
+
+      /* SECTIONS */
+      section {
+        padding: 100px 60px;
+      }
+      .section-tag {
+        display: inline-block;
+        font-size: 0.68rem;
+        font-weight: 400;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--light);
+        margin-bottom: 14px;
+      }
+      h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+        font-weight: 400;
+        line-height: 1.25;
+        letter-spacing: 0.01em;
+        color: var(--charcoal);
+        max-width: 660px;
+      }
+      h2 span {
+        color: var(--lemon-dim);
+      }
+
+      /* PROBLEM */
+      #problem {
+        background: var(--off-white);
+        padding: 100px 0;
+        overflow: hidden;
+      }
+      .prob-top {
+        padding: 0 60px 52px;
+      }
+      .prob-top h2 {
+        max-width: 560px;
+      }
+      .prob-top p {
+        margin-top: 14px;
+        font-size: 0.9rem;
+        line-height: 1.8;
+        color: var(--light);
+      }
+      .prob-track {
+        display: flex;
+        gap: 20px;
+        padding: 0 60px 12px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        cursor: grab;
+        align-items: stretch;
+      }
+      .prob-track::-webkit-scrollbar {
+        display: none;
+      }
+      .prob-card {
+        flex-shrink: 0;
+        width: 320px;
+        scroll-snap-align: start;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(26, 31, 14, 0.06);
+        display: flex;
+        flex-direction: column;
+      }
+      .prob-card-top {
+        padding: 28px 26px 24px;
+        background: white;
+        border: 1px solid var(--border);
+        border-bottom: none;
+        flex: 1;
+      }
+      .prob-card-num {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 3.2rem;
+        color: var(--charcoal);
+        line-height: 1;
+        margin-bottom: 14px;
+      }
+      .prob-card-text {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.15rem;
+        line-height: 1.4;
+        color: rgba(26, 31, 14, 0.4);
+        font-weight: 400;
+      }
+      .prob-card-bottom {
+        padding: 22px 26px;
+        background: var(--lemon);
+        min-height: 140px;
+        display: flex;
+        align-items: flex-start;
+      }
+      .prob-card-bottom p {
+        font-size: 0.87rem;
+        line-height: 1.75;
+        color: var(--charcoal);
+        font-weight: 300;
+      }
+      .prob-card-bottom strong {
+        font-weight: 600;
+        color: var(--forest);
+      }
+      .prob-dots {
+        display: flex;
+        gap: 6px;
+        padding: 20px 60px 0;
+        align-items: center;
+      }
+      .prob-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(90, 122, 58, 0.2);
+        transition: all 0.3s;
+      }
+      .prob-dot.active {
+        background: var(--moss);
+        width: 18px;
+        border-radius: 3px;
+      }
+      .prob-hint {
+        font-size: 0.67rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--light);
+        margin-left: 10px;
+      }
+
+      /* HOW IT WORKS */
+      #how {
+        background: white;
+      }
+      .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-top: 52px;
+      }
+      .step-card {
+        padding: 28px 24px;
+        background: var(--off-white);
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        position: relative;
+        transition: all 0.25s;
+      }
+      .step-card:hover {
+        border-color: var(--moss);
+        background: var(--off-white);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(58, 92, 32, 0.12);
+      }
+      .step-number {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2.4rem;
+        color: rgba(26, 31, 14, 0.07);
+        line-height: 1;
+        margin-bottom: 14px;
+      }
+      .step-icon {
+        font-size: 1.4rem;
+        margin-bottom: 12px;
+      }
+      .step-card h4 {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 400;
+        font-size: 0.95rem;
+        color: var(--charcoal);
+        margin-bottom: 8px;
+      }
+      .step-card p {
+        font-size: 0.82rem;
+        line-height: 1.7;
+        color: var(--light);
+        font-weight: 300;
+      }
+      .step-arrow {
+        position: absolute;
+        top: 50%;
+        right: -12px;
+        transform: translateY(-50%);
+        color: var(--lemon-pale);
+        font-size: 1rem;
+        z-index: 1;
+      }
+      .step-card:last-child .step-arrow {
+        display: none;
+      }
+
+      /* TRACTION */
+      #metrics {
+        background: var(--charcoal);
+      }
+      #metrics .section-tag {
+        color: var(--mint);
+        opacity: 0.7;
+      }
+      #metrics h2 {
+        color: white;
+      }
+      #metrics h2 span {
+        color: var(--mint);
+      }
+      .metrics-intro p {
+        margin-top: 16px;
+        font-size: 0.95rem;
+        line-height: 1.85;
+        color: rgba(255, 255, 255, 0.4);
+        font-weight: 300;
+        max-width: 560px;
+      }
+      .metrics-intro p strong {
+        color: var(--mint);
+        font-weight: 400;
+      }
+      .traction-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-top: 60px;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      .traction-stat {
+        padding: 40px 36px;
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: rgba(255, 255, 255, 0.02);
+        transition: background 0.3s;
+      }
+      .traction-stat:hover {
+        background: rgba(200, 232, 74, 0.05);
+      }
+      .traction-stat:nth-child(2n) {
+        border-right: none;
+      }
+      .traction-stat:nth-child(3),
+      .traction-stat:nth-child(4) {
+        border-bottom: none;
+      }
+      .traction-stat.wide {
+        grid-column: span 2;
+        border-right: none;
+        background: var(--forest);
+        display: flex;
+        align-items: center;
+        gap: 56px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .traction-stat.wide:hover {
+        background: var(--sage);
+      }
+      .t-number {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 3rem;
+        color: white;
+        line-height: 1;
+      }
+      .traction-stat.wide .t-number {
+        color: var(--charcoal);
+        font-size: 2.4rem;
+      }
+      .t-label {
+        font-size: 0.72rem;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.35);
+        margin-top: 8px;
+      }
+      .traction-stat.wide .t-label {
+        color: rgba(200, 219, 160, 0.55);
+      }
+      .t-note {
+        font-size: 0.83rem;
+        line-height: 1.72;
+        color: rgba(255, 255, 255, 0.4);
+        margin-top: 8px;
+        font-weight: 300;
+        max-width: 220px;
+      }
+      .traction-stat.wide .t-note {
+        color: rgba(200, 219, 160, 0.7);
+        max-width: 340px;
+        font-size: 0.92rem;
+      }
+      .investor-aside {
+        margin-top: 48px;
+        padding: 32px 40px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        display: flex;
+        gap: 48px;
+        align-items: center;
+      }
+      .investor-aside-label {
+        font-size: 0.65rem;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+        color: var(--mint);
+        opacity: 0.7;
+        margin-bottom: 10px;
+      }
+      .investor-aside p {
+        font-size: 0.92rem;
+        line-height: 1.78;
+        color: rgba(255, 255, 255, 0.45);
+        max-width: 460px;
+        font-weight: 300;
+      }
+      .investor-aside p strong {
+        color: white;
+        font-weight: 400;
+      }
+      .investor-aside-cta {
+        flex-shrink: 0;
+      }
+
+      /* WHO WE SERVE */
+      #partners {
+        background: var(--off-white);
+      }
+      .audience-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 48px;
+      }
+      .audience-card {
+        padding: 30px 26px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: white;
+        transition: all 0.25s;
+      }
+      .audience-card:hover {
+        border-color: var(--moss);
+        box-shadow: 0 8px 28px rgba(58, 92, 32, 0.12);
+        transform: translateY(-3px);
+      }
+      .aud-icon {
+        font-size: 1.6rem;
+        margin-bottom: 16px;
+      }
+      .audience-card h4 {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 400;
+        font-size: 0.98rem;
+        color: var(--charcoal);
+        margin-bottom: 10px;
+      }
+      .audience-card p {
+        font-size: 0.83rem;
+        line-height: 1.75;
+        color: var(--light);
+        font-weight: 300;
+      }
+      .aud-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 14px;
+      }
+      .aud-tag {
+        font-size: 0.68rem;
+        padding: 3px 10px;
+        border-radius: 20px;
+        background: rgba(58, 92, 32, 0.08);
+        color: var(--sage);
+      }
+      .partners-row {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 48px;
+      }
+      .partner-chip {
+        padding: 10px 22px;
+        border-radius: 40px;
+        background: white;
+        border: 1px solid var(--border);
+        font-size: 0.83rem;
+        color: var(--light);
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .partner-chip:hover {
+        border-color: var(--moss);
+        color: var(--forest);
+        background: var(--off-white);
+      }
+
+      /* TEAM */
+      #team {
+        background: white;
+      }
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-top: 48px;
+      }
+      .team-card {
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        transition: all 0.25s;
+      }
+      .team-card:hover {
+        border-color: var(--moss);
+        box-shadow: 0 8px 24px rgba(58, 92, 32, 0.12);
+        transform: translateY(-3px);
+      }
+      .team-avatar {
+        width: 100%;
+        padding-top: 72%;
+        position: relative;
+        background: var(--off-white);
+      }
+      .avatar-letter {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2.6rem;
+        color: var(--moss);
+        opacity: 0.5;
+      }
+      .team-info {
+        padding: 16px 18px;
+        background: var(--off-white);
+      }
+      .team-info h4 {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 400;
+        font-size: 0.9rem;
+        color: var(--charcoal);
+      }
+      .team-role {
+        font-size: 0.73rem;
+        color: var(--light);
+        margin-top: 3px;
+      }
+      .team-bio {
+        font-size: 0.75rem;
+        color: var(--light);
+        line-height: 1.65;
+        margin-top: 8px;
+        font-weight: 300;
+      }
+
+      /* CONTACT */
+      #contact {
+        background: var(--white);
+        text-align: center;
+        padding: 110px 60px;
+        position: relative;
+        overflow: hidden;
+      }
+      #contact::before {
+        content: "";
+        position: absolute;
+        top: -160px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: rgba(200, 219, 160, 0.1);
+      }
+      #contact h2 {
+        color: var(--charcoal);
+        margin: 0 auto 16px;
+        max-width: 620px;
+        position: relative;
+        z-index: 1;
+      }
+      #contact p {
+        font-size: 0.98rem;
+        color: var(--light);
+        max-width: 460px;
+        margin: 0 auto 48px;
+        line-height: 1.78;
+        position: relative;
+        z-index: 1;
+        font-weight: 300;
+      }
+      .contact-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+      .contact-form .form-row {
+        grid-column: span 2;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .contact-form input,
+      .contact-form select,
+      .contact-form textarea {
+        padding: 16px 20px;
+        border-radius: 12px;
+        border: 2px solid var(--border);
+        background: white;
+        color: var(--charcoal);
+        font-size: 0.9rem;
+        font-family: "Jost", sans-serif;
+        font-weight: 400;
+        outline: none;
+        transition: all 0.2s;
+        width: 100%;
+      }
+      .contact-form input::placeholder,
+      .contact-form textarea::placeholder {
+        color: var(--light);
+      }
+      .contact-form input:focus,
+      .contact-form select:focus,
+      .contact-form textarea:focus {
+        border-color: var(--sage);
+        box-shadow: 0 0 0 3px rgba(96, 125, 68, 0.1);
+      }
+      .contact-form textarea {
+        grid-column: span 2;
+        height: 120px;
+        resize: none;
+      }
+      .contact-form select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 12px center;
+        background-repeat: no-repeat;
+        background-size: 16px;
+        padding-right: 44px;
+      }
+      .btn-submit {
+        grid-column: span 2;
+        padding: 16px 32px;
+        border-radius: 12px;
+        background: var(--forest);
+        color: var(--mint);
+        font-weight: 500;
+        font-size: 0.95rem;
+        font-family: "Jost", sans-serif;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-top: 8px;
+      }
+      .btn-submit:hover {
+        background: var(--sage);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(45, 80, 22, 0.25);
+      }
+
+      /* FOOTER */
+      footer {
+        background: var(--charcoal);
+        color: rgba(255, 255, 255, 0.3);
+        padding: 60px 60px 40px;
+        font-size: 0.78rem;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+      .footer-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .footer-logo svg {
+        flex-shrink: 0;
+      }
+      .footer-logo-text {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.3rem;
+        color: var(--mint);
+        text-decoration: none;
+      }
+      .footer-logo-text span {
+        color: var(--mint);
+      }
+      .footer-desc {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.5);
+        line-height: 1.7;
+        margin-bottom: 20px;
+      }
+      .footer-cities {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .city-chip {
+        padding: 4px 12px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.75rem;
+      }
+      .footer-col-title {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: white;
+        margin-bottom: 16px;
+      }
+      .footer-links {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .footer-links li a {
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+        font-size: 0.82rem;
+        transition: color 0.2s;
+      }
+      .footer-links li a:hover {
+        color: var(--mint);
+      }
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .footer-bottom-links {
+        display: flex;
+        gap: 24px;
+      }
+      .footer-bottom-links a {
+        color: rgba(255, 255, 255, 0.35);
+        text-decoration: none;
+        font-size: 0.78rem;
+        transition: color 0.2s;
+      }
+      .footer-bottom-links a:hover {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* ANIMATIONS */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.65s ease,
+          transform 0.65s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: none;
+      }
+      .reveal-delay-1 {
+        transition-delay: 0.1s;
+      }
+      .reveal-delay-2 {
+        transition-delay: 0.2s;
+      }
+      .reveal-delay-3 {
+        transition-delay: 0.3s;
+      }
+      .reveal-delay-4 {
+        transition-delay: 0.4s;
+      }
+
+      @media (max-width: 1024px) {
+        #hero {
+          grid-template-columns: 1fr;
+          padding: 110px 28px 60px;
+        }
+        .hero-right {
+          display: none;
+        }
+        .steps-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .team-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .audience-grid {
+          grid-template-columns: 1fr;
+        }
+        nav {
+          padding: 0 28px;
+        }
+        .nav-links {
+          display: none;
+        }
+        section {
+          padding: 70px 28px;
+        }
+        #problem {
+          padding: 70px 0;
+        }
+        .prob-top {
+          padding: 0 28px 40px;
+        }
+        .prob-track {
+          padding: 0 28px 12px;
+        }
+        .prob-dots {
+          padding: 16px 28px 0;
+        }
+        .investor-aside {
+          flex-direction: column;
+          gap: 20px;
+        }
+        .contact-form {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+        .contact-form .form-row {
+          grid-column: span 1;
+          grid-template-columns: 1fr;
+        }
+        .contact-form textarea {
+          grid-column: span 1;
+        }
+        .btn-submit {
+          grid-column: span 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="#" class="logo">
+        <div class="logo-mark">D</div>
+        <span class="logo-name">DocPharma</span>
+      </a>
+      <div class="nav-links">
+        <a href="#problem">Problem</a>
+        <a href="#how">How It Works</a>
+        <a href="#metrics">Traction</a>
+        <a href="#partners">Partners</a>
+        <a href="#team">Team</a>
+        <a href="#contact" class="nav-cta">Get in Touch</a>
+      </div>
+    </nav>
+
+    <section id="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="badge-dot"></span> MVP · Early Traction Stage
+        </div>
+        <h1>
+          The Infrastructure Layer<br /><span class="h1-accent"
+            >India's Digital Health</span
+          ><br />Economy Has Been<br />Waiting For
+        </h1>
+        <p class="hero-sub">
+          DocPharma builds tech-powered, Rx-compliant supply chain
+          infrastructure connecting ePharmacies, insurers, and health & wellness
+          D2C brands — at scale.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-primary">Request a Demo →</a>
+          <a href="#metrics" class="btn-ghost">See Traction ↓</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-visual">
+          <div class="visual-label">Live Network Overview</div>
+          <div class="chain-node">
+            <div class="node-icon">🏥</div>
+            <div class="node-info">
+              <div class="node-title">ePharmacies</div>
+              <div class="node-desc">Order management & fulfilment</div>
+            </div>
+            <div class="node-status">Active</div>
+          </div>
+          <div class="chain-connector"></div>
+          <div class="chain-node">
+            <div class="node-icon">🛡️</div>
+            <div class="node-info">
+              <div class="node-title">Insurers</div>
+              <div class="node-desc">Real-time eligibility & claims</div>
+            </div>
+            <div class="node-status">Active</div>
+          </div>
+          <div class="chain-connector"></div>
+          <div class="chain-node">
+            <div class="node-icon">🌿</div>
+            <div class="node-info">
+              <div class="node-title">D2C Health Brands</div>
+              <div class="node-desc">Rx-compliant last-mile delivery</div>
+            </div>
+            <div class="node-status">Active</div>
+          </div>
+          <div class="chain-connector"></div>
+          <div class="chain-node">
+            <div class="node-icon">📦</div>
+            <div class="node-info">
+              <div class="node-title">Fulfilment Network</div>
+              <div class="node-desc">Cold-chain & controlled substances</div>
+            </div>
+            <div class="node-status">Active</div>
+          </div>
+          <div class="visual-footer">
+            <div class="vis-stat">
+              <div class="vis-stat-n">3×</div>
+              <div class="vis-stat-l">Faster Dispatch</div>
+            </div>
+            <div class="vis-stat">
+              <div class="vis-stat-n">99.2%</div>
+              <div class="vis-stat-l">Compliance Rate</div>
+            </div>
+            <div class="vis-stat">
+              <div class="vis-stat-n">₹0</div>
+              <div class="vis-stat-l">Regulatory Penalty</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="problem">
+      <div class="prob-top reveal">
+        <div class="section-tag">The Problem</div>
+        <h2>India's pharma supply chain was never built for digital.</h2>
+        <p>Four structural gaps. One infrastructure answer.</p>
+      </div>
+      <div class="prob-track" id="probTrack">
+        <div class="prob-card">
+          <div class="prob-card-top">
+            <div class="prob-card-num">01</div>
+            <div class="prob-card-text">
+              Prescription fulfilment is never truly 100 percent.
+            </div>
+          </div>
+          <div class="prob-card-bottom">
+            <p>
+              Our network ensures
+              <strong>every valid prescription gets fulfilled</strong> — no
+              stockouts, no drop-offs, no gaps. End-to-end visibility means
+              nothing falls through.
+            </p>
+          </div>
+        </div>
+        <div class="prob-card">
+          <div class="prob-card-top">
+            <div class="prob-card-num">02</div>
+            <div class="prob-card-text">
+              Supply chains move fast. Compliance doesn't keep up.
+            </div>
+          </div>
+          <div class="prob-card-bottom">
+            <p>
+              A <strong>fully Rx-compliant supply chain network</strong> —
+              meeting regulatory requirements at every node, from prescription
+              validation to last-mile delivery.
+            </p>
+          </div>
+        </div>
+        <div class="prob-card">
+          <div class="prob-card-top">
+            <div class="prob-card-num">03</div>
+            <div class="prob-card-text">
+              Patients wait too long for medicine that should arrive today.
+            </div>
+          </div>
+          <div class="prob-card-bottom">
+            <p>
+              <strong>Fast, verified delivery of authentic medicines</strong> —
+              optimised for speed without compromising on drug authenticity or
+              cold-chain integrity.
+            </p>
+          </div>
+        </div>
+        <div class="prob-card">
+          <div class="prob-card-top">
+            <div class="prob-card-num">04</div>
+            <div class="prob-card-text">
+              D2C brands can't reach customers quickly or compliantly.
+            </div>
+          </div>
+          <div class="prob-card-bottom">
+            <p>
+              <strong
+                >Plug-and-play access to a compliant last-mile network</strong
+              >
+              — reach more customers, faster, without building the
+              infrastructure yourself.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="prob-dots">
+        <div class="prob-dot active" id="pd0"></div>
+        <div class="prob-dot" id="pd1"></div>
+        <div class="prob-dot" id="pd2"></div>
+        <div class="prob-dot" id="pd3"></div>
+        <span class="prob-hint">Drag to explore</span>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="section-tag reveal">How It Works</div>
+      <h2 class="reveal reveal-delay-1">
+        Four steps from prescription to <span>patient</span>
+      </h2>
+      <p
+        style="
+          margin-top: 14px;
+          font-size: 0.9rem;
+          line-height: 1.78;
+          color: var(--light);
+          font-weight: 300;
+          max-width: 500px;
+        "
+        class="reveal reveal-delay-2"
+      >
+        DocPharma sits at the centre of every transaction — ensuring compliance,
+        speed, and transparency across the chain.
+      </p>
+      <div class="steps-grid">
+        <div class="step-card reveal reveal-delay-1">
+          <div class="step-number">01</div>
+          <div class="step-icon">🩺</div>
+          <h4>Prescription Ingestion</h4>
+          <p>
+            Digital or physical Rx ingested via API or upload portal.
+            Authenticity, doctor registration, and drug-schedule classification
+            validated instantly.
+          </p>
+          <div class="step-arrow">→</div>
+        </div>
+        <div class="step-card reveal reveal-delay-2">
+          <div class="step-number">02</div>
+          <div class="step-icon">🛡️</div>
+          <h4>Compliance & Insurer Check</h4>
+          <p>
+            Real-time eligibility verified against the patient's insurer. Drug
+            interactions, quantity limits, and state rules checked in one pass.
+          </p>
+          <div class="step-arrow">→</div>
+        </div>
+        <div class="step-card reveal reveal-delay-3">
+          <div class="step-number">03</div>
+          <div class="step-icon">🏪</div>
+          <h4>Network Fulfilment</h4>
+          <p>
+            Order routed to the nearest compliant pharmacy or warehouse.
+            Cold-chain and controlled substance protocols enforced
+            automatically.
+          </p>
+          <div class="step-arrow">→</div>
+        </div>
+        <div class="step-card reveal reveal-delay-4">
+          <div class="step-number">04</div>
+          <div class="step-icon">🚚</div>
+          <h4>Last-Mile Delivery</h4>
+          <p>
+            Tracked, compliant delivery with proof-of-delivery, patient
+            verification, and automatic claim submission upon confirmed receipt.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="metrics">
+      <div class="metrics-intro">
+        <div class="section-tag reveal">Traction</div>
+        <h2 class="reveal reveal-delay-1">
+          We're not just building. <span>We're already moving.</span>
+        </h2>
+        <p class="reveal reveal-delay-2">
+          Since our MVP launch, DocPharma has onboarded partners across all
+          three segments and is processing
+          <strong>real transactions with zero compliance incidents</strong>.
+        </p>
+      </div>
+      <div class="traction-body">
+        <div class="traction-stat wide reveal">
+          <div>
+            <div class="t-number">The Time Is Now</div>
+            <div class="t-label">
+              India's Digital Health Economy Is Scaling Fast
+            </div>
+          </div>
+          <div class="t-note">
+            Every major ePharmacy, insurer, and D2C health brand is racing to go
+            digital — but none of them have the compliant infrastructure to do
+            it right. That's exactly what DocPharma is building.
+          </div>
+        </div>
+        <div class="traction-stat reveal reveal-delay-1">
+          <div class="t-number">12+</div>
+          <div class="t-label">Partners Onboarded</div>
+          <div class="t-note">
+            ePharmacies, insurer networks, and D2C brands — live and
+            transacting.
+          </div>
+        </div>
+        <div class="traction-stat reveal reveal-delay-2">
+          <div class="t-number">99.2%</div>
+          <div class="t-label">Rx Compliance Rate</div>
+          <div class="t-note">
+            Across all processed orders. Zero regulatory incidents to date.
+          </div>
+        </div>
+        <div class="traction-stat reveal reveal-delay-3">
+          <div class="t-number">3×</div>
+          <div class="t-label">Faster Order Dispatch</div>
+          <div class="t-note">
+            Compared to industry average for prescription fulfilment in digital
+            channels.
+          </div>
+        </div>
+        <div class="traction-stat reveal reveal-delay-4">
+          <div class="t-number">5</div>
+          <div class="t-label">States Operational</div>
+          <div class="t-note">
+            Active fulfilment network today, expanding to 10 states by Q3.
+          </div>
+        </div>
+      </div>
+      <div class="investor-aside reveal">
+        <div style="flex: 1">
+          <div class="investor-aside-label">For Investors</div>
+          <p>
+            DocPharma's pre-seed round is open. LOIs signed with 3 major insurer
+            networks, active discussions with leading ePharmacy platforms.
+            <strong
+              >The infrastructure layer of India's digital health economy is
+              being built right now — and we're building it.</strong
+            >
+          </p>
+        </div>
+        <div class="investor-aside-cta">
+          <a href="#contact" class="btn-primary">Request a Pitch Deck →</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="partners">
+      <div class="section-tag reveal">Who We Serve</div>
+      <h2 class="reveal reveal-delay-1">
+        Built for every node in <span>digital health commerce</span>
+      </h2>
+      <p
+        style="
+          margin-top: 12px;
+          font-size: 0.88rem;
+          color: var(--light);
+          line-height: 1.78;
+          font-weight: 300;
+        "
+        class="reveal reveal-delay-2"
+      >
+        DocPharma's network unlocks value for all three stakeholders
+        simultaneously.
+      </p>
+      <div class="audience-grid">
+        <div class="audience-card reveal reveal-delay-1">
+          <div class="aud-icon">🏥</div>
+          <h4>ePharmacies</h4>
+          <p>
+            DocPharma handles Rx validation, state-wise regulatory adherence,
+            and fulfilment — so you can focus entirely on growth and customer
+            experience.
+          </p>
+          <div class="aud-tags">
+            <span class="aud-tag">Rx Validation</span
+            ><span class="aud-tag">Order Routing</span
+            ><span class="aud-tag">Compliance Engine</span>
+          </div>
+        </div>
+        <div class="audience-card reveal reveal-delay-2">
+          <div class="aud-icon">🛡️</div>
+          <h4>Insurers</h4>
+          <p>
+            Real-time point-of-dispense verification reduces claim fraud and
+            processing costs. Integrate once, gain full visibility across the
+            prescription lifecycle.
+          </p>
+          <div class="aud-tags">
+            <span class="aud-tag">Eligibility API</span
+            ><span class="aud-tag">Auto Claims</span
+            ><span class="aud-tag">Fraud Detection</span>
+          </div>
+        </div>
+        <div class="audience-card reveal reveal-delay-3">
+          <div class="aud-icon">🌿</div>
+          <h4>D2C Health & Wellness Brands</h4>
+          <p>
+            Launch Rx-category products with confidence. DocPharma provides the
+            compliant infrastructure to reach consumers directly, at scale.
+          </p>
+          <div class="aud-tags">
+            <span class="aud-tag">Rx-Compliant D2C</span
+            ><span class="aud-tag">Last-Mile</span
+            ><span class="aud-tag">Patient Verification</span>
+          </div>
+        </div>
+      </div>
+      <div class="partners-row">
+        <div class="partner-chip reveal">
+          <span>🤝</span> ePharmacy Partner A
+        </div>
+        <div class="partner-chip reveal reveal-delay-1">
+          <span>🛡️</span> Insurer Network B
+        </div>
+        <div class="partner-chip reveal reveal-delay-2">
+          <span>🌿</span> Health Brand C
+        </div>
+        <div class="partner-chip reveal reveal-delay-3">
+          <span>📦</span> Logistics Partner D
+        </div>
+        <div class="partner-chip reveal reveal-delay-4">
+          <span>🏥</span> Hospital Chain E
+        </div>
+      </div>
+    </section>
+
+    <section id="team">
+      <div class="section-tag reveal">The Team</div>
+      <h2 class="reveal reveal-delay-1">
+        Domain experts. <span>Execution-first.</span>
+      </h2>
+      <p
+        style="
+          margin-top: 12px;
+          font-size: 0.88rem;
+          line-height: 1.78;
+          color: var(--light);
+          font-weight: 300;
+        "
+        class="reveal reveal-delay-2"
+      >
+        Deep expertise in healthcare regulation, supply chain technology, and
+        digital health scaling.
+      </p>
+      <div class="team-grid">
+        <div class="team-card reveal reveal-delay-1">
+          <div class="team-avatar"><div class="avatar-letter">A</div></div>
+          <div class="team-info">
+            <h4>Founder Name</h4>
+            <div class="team-role">CEO & Co-Founder</div>
+            <div class="team-bio">
+              10+ yrs in pharma regulation and digital health. Ex-[leading
+              health org].
+            </div>
+          </div>
+        </div>
+        <div class="team-card reveal reveal-delay-2">
+          <div class="team-avatar"><div class="avatar-letter">B</div></div>
+          <div class="team-info">
+            <h4>Co-Founder Name</h4>
+            <div class="team-role">CTO & Co-Founder</div>
+            <div class="team-bio">
+              Built supply chain systems handling 1M+ daily orders. Ex-[leading
+              tech company].
+            </div>
+          </div>
+        </div>
+        <div class="team-card reveal reveal-delay-3">
+          <div class="team-avatar"><div class="avatar-letter">C</div></div>
+          <div class="team-info">
+            <h4>Advisor Name</h4>
+            <div class="team-role">Head of Compliance</div>
+            <div class="team-bio">
+              Former regulatory affairs lead with Central Drugs Standard Control
+              Organisation.
+            </div>
+          </div>
+        </div>
+        <div class="team-card reveal reveal-delay-4">
+          <div class="team-avatar"><div class="avatar-letter">D</div></div>
+          <div class="team-info">
+            <h4>Advisor Name</h4>
+            <div class="team-role">Partnerships Lead</div>
+            <div class="team-bio">
+              Connected insurer and hospital networks across 8 Indian states.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 class="reveal">Ready to build the future<br />of pharma together?</h2>
+      <p class="reveal reveal-delay-1">
+        Whether you're an investor, potential partner, or simply curious — we'd
+        love to connect.
+      </p>
+      <div class="contact-form reveal reveal-delay-2">
+        <div class="form-row">
+          <input type="text" placeholder="Your Name" />
+          <input type="text" placeholder="Organisation" />
+        </div>
+        <input type="email" placeholder="Email Address" />
+        <select>
+          <option value="" disabled selected>I am a...</option>
+          <option>Investor / VC</option>
+          <option>ePharmacy</option>
+          <option>Insurer</option>
+          <option>D2C Health Brand</option>
+          <option>Other</option>
+        </select>
+        <textarea
+          placeholder="Tell us about your interest or questions..."
+        ></textarea>
+        <button class="btn-submit">Request a Meeting →</button>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">
+            <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+              <rect width="40" height="40" rx="10" fill="#2DBD7E" />
+              <path
+                d="M12 20C12 15.58 15.58 12 20 12C24.42 12 28 15.58 28 20"
+                stroke="white"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+              <path
+                d="M20 28C24.42 28 28 24.42 28 20"
+                stroke="white"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-dasharray="2 3"
+              />
+              <circle cx="20" cy="20" r="3.5" fill="white" />
+            </svg>
+            <span class="footer-logo-text">Doc<span>Pharma</span></span>
+          </div>
+          <p class="footer-desc">
+            India's full-stack healthcare supply chain infrastructure. We power
+            the last-mile and fulfilment layer for platforms, brands, and
+            enterprises across the country.
+          </p>
+          <div class="footer-cities">
+            <span class="city-chip">Mumbai</span>
+            <span class="city-chip">Delhi</span>
+            <span class="city-chip">Bangalore</span>
+            <span class="city-chip">Hyderabad</span>
+            <span class="city-chip">Chennai</span>
+            <span class="city-chip">+more</span>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Solutions</div>
+          <ul class="footer-links">
+            <li>
+              <a onclick="showPage('solutions')"
+                >B2B Fulfillment Infrastructure</a
+              >
+            </li>
+            <li>
+              <a onclick="showPage('solutions')">D2C Dark Store Network</a>
+            </li>
+            <li><a onclick="showPage('solutions')">Diagnostics Network</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Company</div>
+          <ul class="footer-links">
+            <li><a onclick="showPage('about')">About Us</a></li>
+            <li><a onclick="showPage('about')">Our Vision</a></li>
+            <li><a onclick="showPage('about')">Meet the Founders</a></li>
+            <li><a onclick="showPage('about')">Investors</a></li>
+            <li><a>Careers</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Get Started</div>
+          <ul class="footer-links">
+            <li><a onclick="showPage('demo')">Book a Demo</a></li>
+            <li><a>Case Studies</a></li>
+            <li><a>API Documentation</a></li>
+            <li><a>Help &amp; Support</a></li>
+            <li><a>Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 DocPharma. All rights reserved.</span>
+        <div class="footer-bottom-links">
+          <a>Privacy Policy</a>
+          <a>Terms &amp; Conditions</a>
+          <a>Help &amp; Support</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) e.target.classList.add("visible");
+          });
+        },
+        { threshold: 0.1 },
+      );
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => observer.observe(el));
+
+      const sections = document.querySelectorAll("section[id]");
+      window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach((s) => {
+          if (window.scrollY >= s.offsetTop - 100) current = s.id;
+        });
+        document.querySelectorAll(".nav-links a").forEach((a) => {
+          a.style.color =
+            a.getAttribute("href") === `#${current}` ? "var(--charcoal)" : "";
+        });
+      });
+
+      const track = document.getElementById("probTrack");
+      let isDown = false,
+        startX,
+        scrollLeft;
+      track.addEventListener("mousedown", (e) => {
+        isDown = true;
+        startX = e.pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
+        track.style.cursor = "grabbing";
+      });
+      track.addEventListener("mouseleave", () => {
+        isDown = false;
+        track.style.cursor = "grab";
+      });
+      track.addEventListener("mouseup", () => {
+        isDown = false;
+        track.style.cursor = "grab";
+      });
+      track.addEventListener("mousemove", (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        track.scrollLeft = scrollLeft - (e.pageX - track.offsetLeft - startX);
+      });
+      track.addEventListener("scroll", () => {
+        const idx = Math.round(track.scrollLeft / (320 + 20));
+        document
+          .querySelectorAll(".prob-dot")
+          .forEach((d, i) => d.classList.toggle("active", i === idx));
+      });
+
+      document.querySelector(".btn-submit").addEventListener("click", () => {
+        const btn = document.querySelector(".btn-submit");
+        btn.textContent = "✓ Message Sent!";
+        btn.style.background = "var(--mid)";
+        setTimeout(() => {
+          btn.textContent = "Request a Meeting →";
+          btn.style.background = "";
+        }, 3000);
+      });
+    </script>
+  </body>
+</html>
