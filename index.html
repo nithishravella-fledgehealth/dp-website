@@ -728,18 +728,26 @@
       /* TEAM */
       #team {
         background: white;
+        padding: 100px 60px;
       }
       .team-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
         margin-top: 48px;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
       }
       .team-card {
         border-radius: 14px;
         overflow: hidden;
         border: 1px solid var(--border);
         transition: all 0.25s;
+        max-width: 420px;
+        margin: 0 auto;
+        padding: 20px;
+        background: var(--off-white);
       }
       .team-card:hover {
         border-color: var(--moss);
@@ -747,10 +755,13 @@
         transform: translateY(-3px);
       }
       .team-avatar {
-        width: 100%;
-        padding-top: 72%;
+        width: 180px;
+        height: 180px;
         position: relative;
         background: var(--off-white);
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto 24px auto;
       }
       .avatar-letter {
         position: absolute;
@@ -764,14 +775,18 @@
         opacity: 0.5;
       }
       .team-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         padding: 16px 18px;
         background: var(--off-white);
       }
       .team-info h4 {
         font-family: "Cormorant Garamond", serif;
-        font-weight: 400;
-        font-size: 0.9rem;
+        font-weight: 600;
+        font-size: 1rem;
         color: var(--charcoal);
+        margin-bottom: 6px;
       }
       .team-role {
         font-size: 0.73rem;
@@ -784,6 +799,32 @@
         line-height: 1.65;
         margin-top: 8px;
         font-weight: 300;
+        text-align: center;
+      }
+      .linkedin-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 14px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(92, 145, 84, 0.35);
+        color: var(--forest);
+        text-decoration: none;
+        font-size: 0.83rem;
+        transition:
+          background 0.2s ease,
+          transform 0.2s ease;
+      }
+      .linkedin-link:hover {
+        background: rgba(92, 145, 84, 0.12);
+        transform: translateY(-1px);
+      }
+      .linkedin-link svg {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
       }
 
       /* CONTACT */
@@ -1034,7 +1075,8 @@
           grid-template-columns: 1fr 1fr;
         }
         .team-grid {
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr;
+          gap: 20px;
         }
         .audience-grid {
           grid-template-columns: 1fr;
@@ -1084,8 +1126,12 @@
   <body>
     <nav>
       <a href="#" class="logo">
-        <div class="logo-mark">D</div>
-        <span class="logo-name">DocPharma</span>
+        <img
+          src="docpharma-logo.png"
+          alt="DocPharma"
+          height="40"
+          style="height: 40px; width: auto"
+        />
       </a>
       <div class="nav-links">
         <a href="#problem">Problem</a>
@@ -1493,46 +1539,137 @@
       </p>
       <div class="team-grid">
         <div class="team-card reveal reveal-delay-1">
-          <div class="team-avatar"><div class="avatar-letter">A</div></div>
-          <div class="team-info">
-            <h4>Founder Name</h4>
-            <div class="team-role">CEO & Co-Founder</div>
+          <div class="team-avatar">
+            <img
+              src="shashank-rai-ceo.jpg"
+              alt="Shashank Rai"
+              style="
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+                position: absolute;
+                top: 0;
+                left: 0;
+              "
+            />
+          </div>
+          <div class="team-info" style="text-align: center">
+            <h4>Shashank Rai</h4>
+            <div class="team-role">Co-Founder & CEO</div>
             <div class="team-bio">
-              10+ yrs in pharma regulation and digital health. Ex-[leading
-              health org].
+              An ISM/IIT Dhanbad and IIM Calcutta alumnus, he brings 13+ years
+              of supply chain expertise, having served as Associate Director of
+              Supply Chain at Flipkart with past roles at Shadowfax, Udaan and
+              Tata Steel.
             </div>
+            <a
+              class="linkedin-link"
+              href="https://www.linkedin.com/in/shashankiimc/"
+              target="_blank"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.784 1.764-1.75 1.764zm13.5 11.268h-3v-5.604c0-1.337-.026-3.057-1.865-3.057-1.867 0-2.153 1.459-2.153 2.965v5.696h-3v-10h2.881v1.367h.041c.401-.76 1.379-1.562 2.84-1.562 3.037 0 3.6 2 3.6 4.598v5.597z"
+                />
+              </svg>
+              LinkedIn
+            </a>
           </div>
         </div>
         <div class="team-card reveal reveal-delay-2">
-          <div class="team-avatar"><div class="avatar-letter">B</div></div>
-          <div class="team-info">
-            <h4>Co-Founder Name</h4>
-            <div class="team-role">CTO & Co-Founder</div>
+          <div class="team-avatar">
+            <img
+              src="Saqib Ali.jpg"
+              alt="Saqib Ali"
+              style="
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+                position: absolute;
+                top: 0;
+                left: 0;
+              "
+            />
+          </div>
+          <div class="team-info" style="text-align: center">
+            <h4>Saqib Ali</h4>
+            <div class="team-role">Co-Founder & CBO</div>
             <div class="team-bio">
-              Built supply chain systems handling 1M+ daily orders. Ex-[leading
-              tech company].
+              A seasoned entrepreneur with 13+ years of experience in driving
+              business growth, he has founded two startups and held leadership
+              roles at MediBuddy (Category Head – Strategy & Growth), Udaan, and
+              Toppr.
             </div>
+            <a
+              class="linkedin-link"
+              href="https://www.linkedin.com/in/saquib-ali-0109a450/"
+              target="_blank"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.784 1.764-1.75 1.764zm13.5 11.268h-3v-5.604c0-1.337-.026-3.057-1.865-3.057-1.867 0-2.153 1.459-2.153 2.965v5.696h-3v-10h2.881v1.367h.041c.401-.76 1.379-1.562 2.84-1.562 3.037 0 3.6 2 3.6 4.598v5.597z"
+                />
+              </svg>
+              LinkedIn
+            </a>
           </div>
         </div>
         <div class="team-card reveal reveal-delay-3">
-          <div class="team-avatar"><div class="avatar-letter">C</div></div>
-          <div class="team-info">
-            <h4>Advisor Name</h4>
-            <div class="team-role">Head of Compliance</div>
-            <div class="team-bio">
-              Former regulatory affairs lead with Central Drugs Standard Control
-              Organisation.
-            </div>
+          <div class="team-avatar">
+            <img
+              src="Sagar Chauhan Team.jpeg"
+              alt="Sagar Chauhan"
+              style="
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+                position: absolute;
+                top: 0;
+                left: 0;
+              "
+            />
           </div>
-        </div>
-        <div class="team-card reveal reveal-delay-4">
-          <div class="team-avatar"><div class="avatar-letter">D</div></div>
-          <div class="team-info">
-            <h4>Advisor Name</h4>
-            <div class="team-role">Partnerships Lead</div>
+          <div class="team-info" style="text-align: center">
+            <h4>Sagar Chauhan</h4>
+            <div class="team-role">Co-Founder & CPTO</div>
             <div class="team-bio">
-              Connected insurer and hospital networks across 8 Indian states.
+              An IIT Dhanbad alumnus and tech leader with over 12 years as a
+              CTO, 2x founder, and experience at Pidge, SaveIn, DigiCash,
+              Samsung, and PayU.
             </div>
+            <a
+              class="linkedin-link"
+              href="https://www.linkedin.com/in/sagar-chauhan-81b15a17/"
+              target="_blank"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 0 h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.784 1.764-1.75 1.764zm13.5 11.268h-3v-5.604c0-1.337-.026-3.057-1.865-3.057-1.867 0-2.153 1.459-2.153 2.965v5.696h-3v-10h2.881v1.367h.041c.401-.76 1.379-1.562 2.84-1.562 3.037 0 3.6 2 3.6 4.598v5.597z"
+                />
+              </svg>
+              LinkedIn
+            </a>
           </div>
         </div>
       </div>
@@ -1569,24 +1706,12 @@
       <div class="footer-grid">
         <div>
           <div class="footer-logo">
-            <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
-              <rect width="40" height="40" rx="10" fill="#2DBD7E" />
-              <path
-                d="M12 20C12 15.58 15.58 12 20 12C24.42 12 28 15.58 28 20"
-                stroke="white"
-                stroke-width="2.5"
-                stroke-linecap="round"
-              />
-              <path
-                d="M20 28C24.42 28 28 24.42 28 20"
-                stroke="white"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-dasharray="2 3"
-              />
-              <circle cx="20" cy="20" r="3.5" fill="white" />
-            </svg>
-            <span class="footer-logo-text">Doc<span>Pharma</span></span>
+            <img
+              src="docpharma-logo.png"
+              alt="DocPharma"
+              height="50"
+              style="height: 50px; width: auto"
+            />
           </div>
           <p class="footer-desc">
             India's full-stack healthcare supply chain infrastructure. We power
