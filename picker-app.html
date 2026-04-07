@@ -1,577 +1,2914 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Picker App</title>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --blue:#1B5FA8;--blue-d:#0F3D6E;--blue-l:#E8F1FB;
-  --green:#0D7A4E;--green-l:#E8F7F1;
-  --red:#C0490A;--red-l:#FEF0E8;
-  --pk:#C05621;--pk-d:#7C3310;--pk-l:#FFF1E8;--pk-m:#FDE8D8;
-  --navy:#0A1628;
-  --g900:#111827;--g700:#374151;--g500:#6B7280;--g300:#D1D5DB;--g100:#F3F4F6;--g50:#F9FAFB;
-  --white:#fff;--font:'Open Sans',sans-serif;--mono:'Open Sans',sans-serif;
-}
-body{font-family:var(--font);background:#CDD5E0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-.phone{width:390px;height:844px;background:var(--g50);border-radius:44px;overflow:hidden;position:relative;box-shadow:0 0 0 1px rgba(0,0,0,.1),0 4px 8px rgba(0,0,0,.06),0 16px 40px rgba(0,0,0,.12),0 40px 100px rgba(0,0,0,.18);display:flex;flex-direction:column}
-.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:126px;height:34px;background:var(--g50);border-radius:0 0 20px 20px;z-index:50;display:flex;align-items:center;justify-content:center;gap:6px}
-.notch-cam{width:12px;height:12px;border-radius:50%;background:#111}
-.notch-mic{width:5px;height:5px;border-radius:50%;background:#333}
-.status-bar{height:44px;background:var(--white);display:flex;align-items:flex-end;justify-content:space-between;padding:0 24px 8px;flex-shrink:0;z-index:40}
-.sb-time{font-size:15px;font-weight:700;color:var(--g900)}
-.sb-icons{display:flex;align-items:center;gap:5px;color:var(--g900)}
-.screens{flex:1;position:relative;overflow:hidden}
-.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;background:var(--g50);transition:transform .38s cubic-bezier(.4,0,.2,1),opacity .38s;transform:translateX(100%);opacity:0;display:flex;flex-direction:column}
-.screen.active{transform:translateX(0);opacity:1}
-.screen.exit{transform:translateX(-28%);opacity:0}
-.screen::-webkit-scrollbar{display:none}
-.topbar{background:var(--white);padding:14px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--g100);position:sticky;top:0;z-index:30;flex-shrink:0}
-.back-btn{width:36px;height:36px;border-radius:10px;background:var(--g100);display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;flex-shrink:0;transition:background .15s}
-.back-btn:hover{background:var(--g300)}
-.tb-title{font-size:17px;font-weight:700;color:var(--g900);flex:1}
-.tb-sub{font-size:13px;color:var(--g500);margin-top:2px}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Picker App</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --blue: #0992d3;
+        --blue-d: #0f3d6e;
+        --blue-l: #e8f1fb;
+        --green: #0d7a4e;
+        --green-l: #e8f7f1;
+        --red: #c0490a;
+        --red-l: #fef0e8;
+        --pk: #d34a09;
+        --pk-d: #7c3310;
+        --pk-l: #fff1e8;
+        --pk-m: #fde8d8;
+        --navy: #0a1628;
+        --g900: #111827;
+        --g700: #374151;
+        --g500: #6b7280;
+        --g300: #d1d5db;
+        --g100: #f3f4f6;
+        --g50: #f9fafb;
+        --white: #fff;
+        --font: "Open Sans", sans-serif;
+        --mono: "Open Sans", sans-serif;
+      }
+      body {
+        font-family: var(--font);
+        background: #cdd5e0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .phone {
+        width: 390px;
+        height: 844px;
+        background: var(--g50);
+        border-radius: 44px;
+        overflow: hidden;
+        position: relative;
+        box-shadow:
+          0 0 0 1px rgba(0, 0, 0, 0.1),
+          0 4px 8px rgba(0, 0, 0, 0.06),
+          0 16px 40px rgba(0, 0, 0, 0.12),
+          0 40px 100px rgba(0, 0, 0, 0.18);
+        display: flex;
+        flex-direction: column;
+      }
+      .notch {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 126px;
+        height: 34px;
+        background: var(--g50);
+        border-radius: 0 0 20px 20px;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+      .notch-cam {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #111;
+      }
+      .notch-mic {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #333;
+      }
+      .status-bar {
+        height: 44px;
+        background: var(--white);
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        padding: 0 24px 8px;
+        flex-shrink: 0;
+        z-index: 40;
+      }
+      .sb-time {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--g900);
+      }
+      .sb-icons {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: var(--g900);
+      }
+      .screens {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+      }
+      .screen {
+        position: absolute;
+        inset: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background: var(--g50);
+        transition:
+          transform 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+          opacity 0.38s;
+        transform: translateX(100%);
+        opacity: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .screen.active {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      .screen.exit {
+        transform: translateX(-28%);
+        opacity: 0;
+      }
+      .screen::-webkit-scrollbar {
+        display: none;
+      }
+      .welcome-screen {
+        background: var(--white);
+      }
+      .welcome-screen .welcome-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0 24px;
+        text-align: center;
+      }
+      .welcome-logo {
+        max-width: 250px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+      .welcome-text {
+        font-size: 14px;
+        color: var(--g500);
+        margin-bottom: 30px;
+      }
+      .welcome-action {
+        padding: 24px;
+        text-align: center;
+      }
+      .welcome-button {
+        width: 100%;
+        font-size: 16px;
+        padding: 16px 0;
+      }
+      .auth-card {
+        background: var(--white);
+        border-radius: 22px;
+        border: 1px solid var(--g100);
+      }
+      .input-label {
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--g500);
+        margin-bottom: 8px;
+      }
+      .phone-input {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--g50);
+        border: 1px solid var(--g100);
+        border-radius: 14px;
+        padding: 14px 12px;
+      }
+      .country-code {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--g900);
+        flex-shrink: 0;
+      }
+      .phone-input input {
+        border: none;
+        background: transparent;
+        outline: none;
+        flex: 1;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--g900);
+        padding: 0;
+      }
+      .auth-error {
+        margin-top: 12px;
+        padding: 12px 14px;
+        background: var(--red-l);
+        border: 1px solid rgba(192, 73, 10, 0.15);
+        border-radius: 12px;
+        color: var(--red);
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .otp-row {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        margin-top: 8px;
+      }
+      .otp-input {
+        width: 56px;
+        height: 56px;
+        border: 1px solid var(--g300);
+        border-radius: 14px;
+        text-align: center;
+        font-size: 22px;
+        font-weight: 700;
+        outline: none;
+        color: var(--g900);
+        background: var(--white);
+      }
+      .otp-input:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(27, 95, 168, 0.08);
+      }
+      .topbar {
+        background: var(--white);
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-bottom: 1px solid var(--g100);
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        flex-shrink: 0;
+      }
+      .back-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: var(--g100);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: background 0.15s;
+      }
+      .back-btn:hover {
+        background: var(--g300);
+      }
+      .tb-title {
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--g900);
+        flex: 1;
+      }
+      .tb-sub {
+        font-size: 13px;
+        color: var(--g500);
+        margin-top: 2px;
+      }
 
-/* BADGES */
-.ttb{display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.3px;white-space:nowrap}
-.ttb-pa{background:var(--blue-l);color:var(--blue)}
-.ttb-pk{background:var(--pk-l);color:var(--pk)}
-.ot{display:inline-flex;padding:3px 8px;border-radius:5px;font-size:11px;font-weight:700;letter-spacing:.3px}
-.ot-hl{background:#FEE2E2;color:#991B1B}
+      /* BADGES */
+      .ttb {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 9px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        white-space: nowrap;
+      }
+      .ttb-pa {
+        background: var(--blue-l);
+        color: var(--blue);
+      }
+      .ttb-pk {
+        background: var(--pk-l);
+        color: var(--pk);
+      }
+      .ot {
+        display: inline-flex;
+        padding: 3px 8px;
+        border-radius: 5px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+      }
+      .ot-hl {
+        background: #fee2e2;
+        color: #991b1b;
+      }
 
-/* HOME */
-.home-hd{background:var(--navy);padding:20px 20px 32px;position:relative;overflow:hidden;flex-shrink:0}
-.home-hd::before{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(27,95,168,.25);top:-60px;right:-60px}
-.home-hd::after{content:'';position:absolute;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.04);bottom:-30px;left:40px}
-.hd-top{display:flex;align-items:flex-start;justify-content:space-between;position:relative;z-index:1}
-.hd-greet{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:3px}
-.hd-name{font-size:23px;font-weight:700;color:#fff}
-.hd-store{display:inline-flex;align-items:center;gap:5px;margin-top:10px;background:rgba(255,255,255,.08);padding:6px 12px;border-radius:20px}
-.hd-status{display:inline-flex;align-items:center;gap:5px;margin-top:10px;background:rgba(255,255,255,.08);padding:6px 12px;border-radius:20px}
-.hd-dot{width:7px;height:7px;border-radius:50%;background:#4ADE80;flex-shrink:0}
-.hd-store-txt{font-size:12px;color:rgba(255,255,255,.65);font-weight:500}
-.av{width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,.15);cursor:pointer}
-.sec-lbl{padding:16px 18px 8px;font-size:11px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.8px}
+      /* HOME */
+      .home-hd {
+        background: var(--navy);
+        padding: 20px 20px 32px;
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+      .home-hd::before {
+        content: "";
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: rgba(27, 95, 168, 0.25);
+        top: -60px;
+        right: -60px;
+      }
+      .home-hd::after {
+        content: "";
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.04);
+        bottom: -30px;
+        left: 40px;
+      }
+      .hd-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        position: relative;
+        z-index: 1;
+      }
+      .hd-greet {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.5);
+        margin-bottom: 3px;
+      }
+      .hd-name {
+        font-size: 23px;
+        font-weight: 700;
+        color: #fff;
+      }
+      .hd-store {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 10px;
+        background: rgba(255, 255, 255, 0.08);
+        padding: 6px 12px;
+        border-radius: 20px;
+      }
+      .hd-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 10px;
+        background: rgba(255, 255, 255, 0.08);
+        padding: 6px 12px;
+        border-radius: 20px;
+      }
+      .hd-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #4ade80;
+        flex-shrink: 0;
+      }
+      .hd-store-txt {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.65);
+        font-weight: 500;
+      }
+      .av {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--blue);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        cursor: pointer;
+      }
+      .sec-lbl {
+        padding: 16px 18px 8px;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--g500);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+      }
 
-/* ACTIVE TASK CARDS */
-.active-card{margin:0 14px 4px;border-radius:18px;padding:18px;position:relative;overflow:hidden}
-.active-card.pa{background:var(--blue)}
-.active-card.pk{background:linear-gradient(135deg,#7C3310,var(--pk))}
-.ac-shine{position:absolute;top:-40px;right:-30px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.07)}
-.ac-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;color:rgba(255,255,255,.9);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
-.ac-id{font-size:19px;font-weight:700;color:#fff;margin-bottom:3px;font-family:var(--mono)}
-.ac-meta{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:14px}
-.ac-track{background:rgba(255,255,255,.15);border-radius:6px;height:5px;margin-bottom:5px;overflow:hidden}
-.ac-fill{height:100%;background:#fff;border-radius:6px}
-.ac-prog-lbl{font-size:12px;color:rgba(255,255,255,.65);margin-bottom:14px}
-.ac-btn{width:100%;padding:13px;background:#fff;border:none;border-radius:10px;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s}
-.pa .ac-btn{color:var(--blue)}.pk .ac-btn{color:var(--pk)}
-.ac-btn:hover{opacity:.9}
+      /* ACTIVE TASK CARDS */
+      .active-card {
+        margin: 0 14px 4px;
+        border-radius: 18px;
+        padding: 18px;
+        position: relative;
+        overflow: hidden;
+      }
+      .active-card.pa {
+        background: var(--blue);
+      }
+      .active-card.pk {
+        background: linear-gradient(135deg, #7c3310, var(--pk));
+      }
+      .ac-shine {
+        position: absolute;
+        top: -40px;
+        right: -30px;
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+      }
+      .ac-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: rgba(255, 255, 255, 0.15);
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.9);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+      }
+      .ac-id {
+        font-size: 19px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 3px;
+        font-family: var(--mono);
+      }
+      .ac-meta {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 14px;
+      }
+      .ac-track {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 6px;
+        height: 5px;
+        margin-bottom: 5px;
+        overflow: hidden;
+      }
+      .ac-fill {
+        height: 100%;
+        background: #fff;
+        border-radius: 6px;
+      }
+      .ac-prog-lbl {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.65);
+        margin-bottom: 14px;
+      }
+      .ac-btn {
+        width: 100%;
+        padding: 13px;
+        background: #fff;
+        border: none;
+        border-radius: 10px;
+        font-family: var(--font);
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: opacity 0.15s;
+      }
+      .pa .ac-btn {
+        color: var(--blue);
+      }
+      .pk .ac-btn {
+        color: var(--pk);
+      }
+      .ac-btn:hover {
+        opacity: 0.9;
+      }
 
-/* TASK ROWS */
-.task-row{margin:0 14px 8px;background:var(--white);border-radius:14px;padding:14px;border:1px solid var(--g100);display:flex;align-items:center;gap:11px;cursor:pointer;transition:all .15s}
-.task-row:hover{border-color:var(--g300);background:var(--g50)}
-.tr-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.tr-icon.pa{background:var(--blue-l)}.tr-icon.pk{background:var(--pk-l)}
-.tr-info{flex:1;min-width:0}
-.tr-id{font-size:14px;font-weight:600;color:var(--g900);font-family:var(--mono)}
-.tr-meta{font-size:12px;color:var(--g500);margin-top:3px}
-.tr-badges{display:flex;gap:5px;align-items:center;flex-shrink:0}
+      /* TASK ROWS */
+      .task-row {
+        margin: 0 14px 8px;
+        background: var(--white);
+        border-radius: 14px;
+        padding: 14px;
+        border: 1px solid var(--g100);
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .task-row:hover {
+        border-color: var(--g300);
+        background: var(--g50);
+      }
+      .tr-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .tr-icon.pa {
+        background: var(--blue-l);
+      }
+      .tr-icon.pk {
+        background: var(--pk-l);
+      }
+      .tr-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .tr-id {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--g900);
+        font-family: var(--mono);
+      }
+      .tr-meta {
+        font-size: 12px;
+        color: var(--g500);
+        margin-top: 3px;
+      }
+      .tr-badges {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        flex-shrink: 0;
+      }
 
-/* INFO STRIP — enlarged */
-.info-strip{margin:14px 14px 0;background:var(--white);border-radius:14px;padding:16px;border:1px solid var(--g100)}
-.is-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--g50)}
-.is-row:last-child{border-bottom:none}
-.is-k{font-size:14px;color:var(--g500);font-weight:500}
-.is-v{font-size:14px;color:var(--g900);font-weight:700;text-align:right;font-family:var(--mono)}
+      /* INFO STRIP — enlarged */
+      .info-strip {
+        margin: 14px 14px 0;
+        background: var(--white);
+        border-radius: 14px;
+        padding: 16px;
+        border: 1px solid var(--g100);
+      }
+      .is-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--g50);
+      }
+      .is-row:last-child {
+        border-bottom: none;
+      }
+      .is-k {
+        font-size: 14px;
+        color: var(--g500);
+        font-weight: 500;
+      }
+      .is-v {
+        font-size: 14px;
+        color: var(--g900);
+        font-weight: 700;
+        text-align: right;
+        font-family: var(--mono);
+      }
 
-/* PRODUCT LIST — enlarged */
-.prod-list{margin:12px 14px 0}
-.pr{background:var(--white);border-radius:12px;padding:14px;margin-bottom:8px;border:1px solid var(--g100);display:flex;align-items:center;gap:11px;cursor:pointer;transition:all .15s}
-.pr:active{transform:scale(.98)}
-.pa-h:hover{border-color:var(--blue);background:var(--blue-l)}
-.pk-h:hover{border-color:var(--pk);background:var(--pk-l)}
-.pr.done{opacity:.45;cursor:default;pointer-events:none}
-.pr-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.pr-dot.p{background:var(--g300)}.pr-dot.d{background:var(--green)}
-.pr-info{flex:1;min-width:0}
-.pr-name{font-size:14px;font-weight:600;color:var(--g900);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pr-sub{font-size:12px;color:var(--g500);margin-top:3px;font-family:var(--mono)}
-.pr-qty{font-size:12px;font-weight:700;padding:3px 9px;border-radius:6px;background:var(--g100);color:var(--g700);white-space:nowrap;flex-shrink:0}
-.pr-chk{width:22px;height:22px;border-radius:50%;background:var(--green-l);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+      /* PRODUCT LIST — enlarged */
+      .prod-list {
+        margin: 12px 14px 0;
+      }
+      .pr {
+        background: var(--white);
+        border-radius: 12px;
+        padding: 14px;
+        margin-bottom: 8px;
+        border: 1px solid var(--g100);
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .pr:active {
+        transform: scale(0.98);
+      }
+      .pa-h:hover {
+        border-color: var(--blue);
+        background: var(--blue-l);
+      }
+      .pk-h:hover {
+        border-color: var(--pk);
+        background: var(--pk-l);
+      }
+      .pr.done {
+        opacity: 0.45;
+        cursor: default;
+        pointer-events: none;
+      }
+      .pr-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .pr-dot.p {
+        background: var(--g300);
+      }
+      .pr-dot.d {
+        background: var(--green);
+      }
+      .pr-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .pr-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--g900);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .pr-sub {
+        font-size: 12px;
+        color: var(--g500);
+        margin-top: 3px;
+        font-family: var(--mono);
+      }
+      .pr-qty {
+        font-size: 12px;
+        font-weight: 700;
+        padding: 3px 9px;
+        border-radius: 6px;
+        background: var(--g100);
+        color: var(--g700);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .pr-chk {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--green-l);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
 
-/* STEP BAR — enlarged */
-.step-bar{margin:14px 14px 0;background:var(--white);border-radius:12px;padding:14px 16px;border:1px solid var(--g100);display:flex;align-items:center;gap:10px}
-.sbar-step{font-size:14px;font-weight:700;color:var(--blue)}
-.sbar-step.pk{color:var(--pk)}
-.sbar-div{width:1px;height:16px;background:var(--g300)}
-.sbar-lbl{font-size:13px;color:var(--g700);flex:1;font-weight:500}
-.sbar-dots{display:flex;gap:5px}
-.sdot{width:7px;height:7px;border-radius:50%;background:var(--g300)}
-.sdot.on{background:var(--blue)}.sdot.on.pk{background:var(--pk)}
+      /* STEP BAR — enlarged */
+      .step-bar {
+        margin: 14px 14px 0;
+        background: var(--white);
+        border-radius: 12px;
+        padding: 14px 16px;
+        border: 1px solid var(--g100);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .sbar-step {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--blue);
+      }
+      .sbar-step.pk {
+        color: var(--pk);
+      }
+      .sbar-div {
+        width: 1px;
+        height: 16px;
+        background: var(--g300);
+      }
+      .sbar-lbl {
+        font-size: 13px;
+        color: var(--g700);
+        flex: 1;
+        font-weight: 500;
+      }
+      .sbar-dots {
+        display: flex;
+        gap: 5px;
+      }
+      .sdot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--g300);
+      }
+      .sdot.on {
+        background: var(--blue);
+      }
+      .sdot.on.pk {
+        background: var(--pk);
+      }
 
-/* PRODUCT DETAIL CARD — enlarged */
-.pdc{margin:12px 14px 0;background:var(--white);border-radius:14px;padding:16px;border:1px solid var(--g100)}
-.pdc-name{font-size:16px;font-weight:700;color:var(--g900);margin-bottom:12px;line-height:1.3}
-.pdc-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--g50)}
-.pdc-row:last-child{border-bottom:none}
-.pdc-k{font-size:13px;color:var(--g500);font-weight:500}
-.pdc-v{font-size:13px;font-weight:700;color:var(--g900);font-family:var(--mono)}
+      /* PRODUCT DETAIL CARD — enlarged */
+      .pdc {
+        margin: 12px 14px 0;
+        background: var(--white);
+        border-radius: 14px;
+        padding: 16px;
+        border: 1px solid var(--g100);
+      }
+      .pdc-name {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--g900);
+        margin-bottom: 12px;
+        line-height: 1.3;
+      }
+      .pdc-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 9px 0;
+        border-bottom: 1px solid var(--g50);
+      }
+      .pdc-row:last-child {
+        border-bottom: none;
+      }
+      .pdc-k {
+        font-size: 13px;
+        color: var(--g500);
+        font-weight: 500;
+      }
+      .pdc-v {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--g900);
+        font-family: var(--mono);
+      }
 
-/* SCAN AREA — enlarged hint */
-.scan-wrap{margin:12px 14px 0;border-radius:18px;overflow:hidden;background:var(--navy);position:relative;height:210px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.scan-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:28px 28px}
-.scan-frame{width:148px;height:148px;position:relative;z-index:2}
-.sc{position:absolute;width:22px;height:22px}
-.sc-tl{top:0;left:0;border-top:3px solid var(--blue);border-left:3px solid var(--blue);border-radius:3px 0 0 0}
-.sc-tr{top:0;right:0;border-top:3px solid var(--blue);border-right:3px solid var(--blue);border-radius:0 3px 0 0}
-.sc-bl{bottom:0;left:0;border-bottom:3px solid var(--blue);border-left:3px solid var(--blue);border-radius:0 0 0 3px}
-.sc-br{bottom:0;right:0;border-bottom:3px solid var(--blue);border-right:3px solid var(--blue);border-radius:0 0 3px 0}
-.scan-line{position:absolute;left:3px;right:3px;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent);animation:scanmv 2s ease-in-out infinite;top:50%;box-shadow:0 0 10px var(--blue)}
-.scan-line.pk{background:linear-gradient(90deg,transparent,var(--pk),transparent);box-shadow:0 0 10px var(--pk)}
-@keyframes scanmv{0%,100%{top:8%}50%{top:88%}}
-.scan-hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:13px;font-weight:500;color:rgba(255,255,255,.6);z-index:2}
-.scan-wrap.err .sc{border-color:var(--red)!important}
-.scan-wrap.err .scan-line{background:linear-gradient(90deg,transparent,var(--red),transparent);box-shadow:0 0 10px var(--red)}
-.scan-wrap.ok{background:#052E1C}
-.scan-wrap.ok .sc{border-color:var(--green)!important}
-.scan-wrap.ok .scan-line{background:linear-gradient(90deg,transparent,var(--green),transparent);box-shadow:0 0 10px var(--green)}
+      /* SCAN AREA — enlarged hint */
+      .scan-wrap {
+        margin: 12px 14px 0;
+        border-radius: 18px;
+        overflow: hidden;
+        background: var(--navy);
+        position: relative;
+        height: 210px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .scan-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 28px 28px;
+      }
+      .scan-frame {
+        width: 148px;
+        height: 148px;
+        position: relative;
+        z-index: 2;
+      }
+      .sc {
+        position: absolute;
+        width: 22px;
+        height: 22px;
+      }
+      .sc-tl {
+        top: 0;
+        left: 0;
+        border-top: 3px solid var(--blue);
+        border-left: 3px solid var(--blue);
+        border-radius: 3px 0 0 0;
+      }
+      .sc-tr {
+        top: 0;
+        right: 0;
+        border-top: 3px solid var(--blue);
+        border-right: 3px solid var(--blue);
+        border-radius: 0 3px 0 0;
+      }
+      .sc-bl {
+        bottom: 0;
+        left: 0;
+        border-bottom: 3px solid var(--blue);
+        border-left: 3px solid var(--blue);
+        border-radius: 0 0 0 3px;
+      }
+      .sc-br {
+        bottom: 0;
+        right: 0;
+        border-bottom: 3px solid var(--blue);
+        border-right: 3px solid var(--blue);
+        border-radius: 0 0 3px 0;
+      }
+      .scan-line {
+        position: absolute;
+        left: 3px;
+        right: 3px;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--blue),
+          transparent
+        );
+        animation: scanmv 2s ease-in-out infinite;
+        top: 50%;
+        box-shadow: 0 0 10px var(--blue);
+      }
+      .scan-line.pk {
+        background: linear-gradient(90deg, transparent, var(--pk), transparent);
+        box-shadow: 0 0 10px var(--pk);
+      }
+      @keyframes scanmv {
+        0%,
+        100% {
+          top: 8%;
+        }
+        50% {
+          top: 88%;
+        }
+      }
+      .scan-hint {
+        position: absolute;
+        bottom: 14px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.6);
+        z-index: 2;
+      }
+      .scan-wrap.err .sc {
+        border-color: var(--red) !important;
+      }
+      .scan-wrap.err .scan-line {
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--red),
+          transparent
+        );
+        box-shadow: 0 0 10px var(--red);
+      }
+      .scan-wrap.ok {
+        background: #052e1c;
+      }
+      .scan-wrap.ok .sc {
+        border-color: var(--green) !important;
+      }
+      .scan-wrap.ok .scan-line {
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--green),
+          transparent
+        );
+        box-shadow: 0 0 10px var(--green);
+      }
 
-/* LOCATION CARD */
-.loc-card{margin:12px 14px 0;background:linear-gradient(135deg,var(--blue-d),var(--blue));border-radius:16px;padding:16px;position:relative;overflow:hidden}
-.loc-card.pk{background:linear-gradient(135deg,var(--pk-d),var(--pk))}
-.lc-glow{position:absolute;top:-20px;right:-20px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.07)}
-.lc-lbl{font-size:11px;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
-.lc-name{font-family:var(--mono);font-size:26px;font-weight:700;color:#fff;letter-spacing:.5px;margin-bottom:10px}
-.lc-chips{display:flex;gap:6px;flex-wrap:wrap}
-.lc-chip{background:rgba(255,255,255,.14);border-radius:5px;padding:4px 9px;font-size:11px;color:rgba(255,255,255,.8);font-weight:600}
+      /* LOCATION CARD */
+      .loc-card {
+        margin: 12px 14px 0;
+        background: linear-gradient(135deg, var(--blue-d), var(--blue));
+        border-radius: 16px;
+        padding: 16px;
+        position: relative;
+        overflow: hidden;
+      }
+      .loc-card.pk {
+        background: linear-gradient(135deg, var(--pk-d), var(--pk));
+      }
+      .lc-glow {
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+      }
+      .lc-lbl {
+        font-size: 11px;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.55);
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        margin-bottom: 5px;
+      }
+      .lc-name {
+        font-family: var(--mono);
+        font-size: 26px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 0.5px;
+        margin-bottom: 10px;
+      }
+      .lc-chips {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .lc-chip {
+        background: rgba(255, 255, 255, 0.14);
+        border-radius: 5px;
+        padding: 4px 9px;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 600;
+      }
 
-/* QUANTITY DISPLAY — non-editable */
-.qty-box{margin:12px 14px 0;background:var(--white);border-radius:14px;padding:20px;border:1px solid var(--g100)}
-.qty-lbl{font-size:12px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.5px;margin-bottom:18px}
-.qty-display{display:flex;flex-direction:column;align-items:center;gap:6px}
-.qty-num{font-size:54px;font-weight:700;color:var(--g900);font-family:var(--mono);line-height:1}
-.qty-unit{font-size:15px;color:var(--g500);font-weight:500}
-.qty-note{text-align:center;font-size:13px;color:var(--g700);margin-top:16px;padding:12px 14px;background:var(--g50);border-radius:10px;border:1px solid var(--g100);line-height:1.5}
+      /* QUANTITY DISPLAY — non-editable */
+      .qty-box {
+        margin: 12px 14px 0;
+        background: var(--white);
+        border-radius: 14px;
+        padding: 20px;
+        border: 1px solid var(--g100);
+      }
+      .qty-lbl {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--g500);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 18px;
+      }
+      .qty-display {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+      }
+      .qty-num {
+        font-size: 54px;
+        font-weight: 700;
+        color: var(--g900);
+        font-family: var(--mono);
+        line-height: 1;
+      }
+      .qty-unit {
+        font-size: 15px;
+        color: var(--g500);
+        font-weight: 500;
+      }
+      .qty-note {
+        text-align: center;
+        font-size: 13px;
+        color: var(--g700);
+        margin-top: 16px;
+        padding: 12px 14px;
+        background: var(--g50);
+        border-radius: 10px;
+        border: 1px solid var(--g100);
+        line-height: 1.5;
+      }
 
-/* ERROR BANNER */
-.err-banner{margin:10px 14px 0;background:var(--red-l);border:1px solid rgba(192,73,10,.2);border-radius:12px;padding:13px;display:none;align-items:flex-start;gap:9px}
-.eb-icon{width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.eb-txt{font-size:13px;color:var(--red);font-weight:500;line-height:1.5}
+      /* ERROR BANNER */
+      .err-banner {
+        margin: 10px 14px 0;
+        background: var(--red-l);
+        border: 1px solid rgba(192, 73, 10, 0.2);
+        border-radius: 12px;
+        padding: 13px;
+        display: none;
+        align-items: flex-start;
+        gap: 9px;
+      }
+      .eb-icon {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--red);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .eb-txt {
+        font-size: 13px;
+        color: var(--red);
+        font-weight: 500;
+        line-height: 1.5;
+      }
 
-/* PRODUCT IMAGE CARD */
-.prod-img{margin:12px 14px 0;background:var(--white);border-radius:14px;padding:16px;border:1px solid var(--g100);display:flex;align-items:center;gap:14px}
-.prod-img-box{width:68px;height:68px;border-radius:12px;background:var(--pk-l);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(192,86,33,.1)}
-.pii-name{font-size:15px;font-weight:700;color:var(--g900);line-height:1.3;margin-bottom:5px}
-.pii-meta{font-size:13px;color:var(--g500)}
+      /* PRODUCT IMAGE CARD */
+      .prod-img {
+        margin: 12px 14px 0;
+        background: var(--white);
+        border-radius: 14px;
+        padding: 16px;
+        border: 1px solid var(--g100);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .prod-img-box {
+        width: 68px;
+        height: 68px;
+        border-radius: 12px;
+        background: var(--pk-l);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border: 1px solid rgba(192, 86, 33, 0.1);
+      }
+      .pii-name {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--g900);
+        line-height: 1.3;
+        margin-bottom: 5px;
+      }
+      .pii-meta {
+        font-size: 13px;
+        color: var(--g500);
+      }
 
-/* REVIEW CARD */
-.review-card{margin:12px 14px 0;background:var(--white);border-radius:14px;padding:16px;border:1px solid var(--g100)}
-.rc-title{font-size:12px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.4px;margin-bottom:12px}
-.rc-row{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--g50)}
-.rc-row:last-child{border-bottom:none}
-.rc-prod{font-size:13px;font-weight:600;color:var(--g900);flex:1;margin-right:10px}
-.rc-detail{font-size:12px;color:var(--g500);font-family:var(--mono);text-align:right}
+      /* REVIEW CARD */
+      .review-card {
+        margin: 12px 14px 0;
+        background: var(--white);
+        border-radius: 14px;
+        padding: 16px;
+        border: 1px solid var(--g100);
+      }
+      .rc-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--g500);
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        margin-bottom: 12px;
+      }
+      .rc-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--g50);
+      }
+      .rc-row:last-child {
+        border-bottom: none;
+      }
+      .rc-prod {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--g900);
+        flex: 1;
+        margin-right: 10px;
+      }
+      .rc-detail {
+        font-size: 12px;
+        color: var(--g500);
+        font-family: var(--mono);
+        text-align: right;
+      }
 
-/* SUCCESS */
-.success-full{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 22px;background:var(--white)}
-.si{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px;animation:popin .4s cubic-bezier(.34,1.56,.64,1)}
-.si.grn{background:var(--green-l)}.si.pk{background:var(--pk-l)}
-@keyframes popin{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
-.s-title{font-size:22px;font-weight:700;color:var(--g900);text-align:center;margin-bottom:8px}
-.s-sub{font-size:14px;color:var(--g500);text-align:center;line-height:1.6;margin-bottom:22px}
-.s-card{width:100%;border-radius:14px;padding:14px;margin-bottom:20px}
-.s-card.grn{background:var(--green-l);border:1px solid rgba(13,122,78,.12)}
-.s-card.pk{background:var(--pk-l);border:1px solid rgba(192,86,33,.15)}
-.sc-row{display:flex;justify-content:space-between;padding:5px 0}
-.sc-k{font-size:12px;font-weight:600}
-.grn .sc-k{color:var(--green)}.pk .sc-k{color:var(--pk)}
-.sc-v{font-size:13px;color:var(--g900);font-weight:700;font-family:var(--mono)}
+      /* SUCCESS */
+      .success-full {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 28px 22px;
+        background: var(--white);
+      }
+      .si {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        animation: popin 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .si.grn {
+        background: var(--green-l);
+      }
+      .si.pk {
+        background: var(--pk-l);
+      }
+      @keyframes popin {
+        from {
+          transform: scale(0);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .s-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--g900);
+        text-align: center;
+        margin-bottom: 8px;
+      }
+      .s-sub {
+        font-size: 14px;
+        color: var(--g500);
+        text-align: center;
+        line-height: 1.6;
+        margin-bottom: 22px;
+      }
+      .s-card {
+        width: 100%;
+        border-radius: 14px;
+        padding: 14px;
+        margin-bottom: 20px;
+      }
+      .s-card.grn {
+        background: var(--green-l);
+        border: 1px solid rgba(13, 122, 78, 0.12);
+      }
+      .s-card.pk {
+        background: var(--pk-l);
+        border: 1px solid rgba(192, 86, 33, 0.15);
+      }
+      .sc-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+      }
+      .sc-k {
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .grn .sc-k {
+        color: var(--green);
+      }
+      .pk .sc-k {
+        color: var(--pk);
+      }
+      .sc-v {
+        font-size: 13px;
+        color: var(--g900);
+        font-weight: 700;
+        font-family: var(--mono);
+      }
 
-/* COMPLETE */
-.complete-full{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 22px;background:var(--navy)}
-.cc-icon{width:84px;height:84px;border-radius:50%;background:rgba(13,122,78,.15);border:2px solid rgba(13,122,78,.4);display:flex;align-items:center;justify-content:center;margin-bottom:22px;animation:popin .4s cubic-bezier(.34,1.56,.64,1)}
-.cc-title{font-size:24px;font-weight:700;color:#fff;text-align:center;margin-bottom:8px}
-.cc-sub{font-size:13px;color:rgba(255,255,255,.45);text-align:center;line-height:1.6;margin-bottom:28px}
-.cc-grid{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:28px}
-.cc-stat{background:rgba(255,255,255,.05);border-radius:12px;padding:14px;text-align:center}
-.cc-v{font-size:22px;font-weight:700;color:#fff;font-family:var(--mono)}
-.cc-l{font-size:10px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+      /* COMPLETE */
+      .complete-full {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 28px 22px;
+        background: var(--navy);
+      }
+      .cc-icon {
+        width: 84px;
+        height: 84px;
+        border-radius: 50%;
+        background: rgba(13, 122, 78, 0.15);
+        border: 2px solid rgba(13, 122, 78, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 22px;
+        animation: popin 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .cc-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #fff;
+        text-align: center;
+        margin-bottom: 8px;
+      }
+      .cc-sub {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.45);
+        text-align: center;
+        line-height: 1.6;
+        margin-bottom: 28px;
+      }
+      .cc-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 28px;
+      }
+      .cc-stat {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 14px;
+        text-align: center;
+      }
+      .cc-v {
+        font-size: 22px;
+        font-weight: 700;
+        color: #fff;
+        font-family: var(--mono);
+      }
+      .cc-l {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.35);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 4px;
+      }
 
-/* BOTTOM */
-.bot{padding:10px 14px 26px;background:var(--white);border-top:1px solid var(--g100);flex-shrink:0;position:sticky;bottom:0;z-index:20}
-.cta{width:100%;padding:15px;border:none;border-radius:13px;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
-.cta-p{background:var(--blue);color:#fff}.cta-p:hover{background:var(--blue-d)}
-.cta-pk{background:var(--pk);color:#fff}.cta-pk:hover{background:var(--pk-d)}
-.cta-gr{background:var(--green);color:#fff}
-.cta-wh{background:var(--white);color:var(--navy);border:1.5px solid var(--g300)}
-.cta-sec{font-size:13px;color:var(--g500);background:none;border:none;width:100%;padding:10px;cursor:pointer;font-family:var(--font);font-weight:500;margin-top:2px}
-.cta-sec.pk{color:var(--pk)}
+      /* BOTTOM */
+      .bot {
+        padding: 10px 14px 26px;
+        background: var(--white);
+        border-top: 1px solid var(--g100);
+        flex-shrink: 0;
+        position: sticky;
+        bottom: 0;
+        z-index: 20;
+      }
+      .cta {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 13px;
+        font-family: var(--font);
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .cta-p {
+        background: var(--blue);
+        color: #fff;
+      }
+      .cta-p:hover {
+        background: var(--blue-d);
+      }
+      .cta-pk {
+        background: var(--pk);
+        color: #fff;
+      }
+      .cta-pk:hover {
+        background: var(--pk-d);
+      }
+      .cta-gr {
+        background: var(--green);
+        color: #fff;
+      }
+      .cta-wh {
+        background: var(--white);
+        color: var(--navy);
+        border: 1.5px solid var(--g300);
+      }
+      .cta-sec {
+        font-size: 13px;
+        color: var(--g500);
+        background: none;
+        border: none;
+        width: 100%;
+        padding: 10px;
+        cursor: pointer;
+        font-family: var(--font);
+        font-weight: 500;
+        margin-top: 2px;
+      }
+      .cta-sec.pk {
+        color: var(--pk);
+      }
 
-/* MODAL STYLES */
-.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:1000}
-.modal-content{background:var(--white);border-radius:14px;padding:20px;width:90%;max-width:350px;border:1px solid var(--g100)}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.modal-header h3{font-size:18px;font-weight:700;color:var(--g900);margin:0}
-.modal-close{background:none;border:none;font-size:24px;color:var(--g500);cursor:pointer;padding:0;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .15s}
-.modal-close:hover{background:var(--g100)}
-.modal-body{display:flex;flex-direction:column;gap:12px}
-.modal-body label{font-size:14px;font-weight:600;color:var(--g700)}
-.modal-body select{width:100%;padding:10px;border:1px solid var(--g300);border-radius:8px;font-family:var(--font);font-size:14px}
-.expiry-display{display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--g50);border-radius:8px;border:1px solid var(--g100)}
-.expiry-display label{font-size:14px;font-weight:600;color:var(--g700)}
-#expiry-date{font-size:14px;font-weight:700;color:var(--g900);font-family:var(--mono)}
-.modal-footer{margin-top:16px;text-align:right}
-</style>
-</head>
-<body>
-<div class="phone">
-  <div class="notch"><div class="notch-mic"></div><div class="notch-cam"></div></div>
-  <div class="status-bar">
-    <span class="sb-time">9:41</span>
-    <div class="sb-icons">
-      <svg width="16" height="12" fill="currentColor" viewBox="0 0 16 12"><rect x="0" y="4" width="3" height="8" rx="1"/><rect x="4.5" y="2.5" width="3" height="9.5" rx="1"/><rect x="9" y="1" width="3" height="11" rx="1"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" opacity=".25"/></svg>
-      <svg width="16" height="12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M1.5 8.5a13 13 0 0 1 21 0M5 12a10 10 0 0 1 14 0M8.5 15.5a6 6 0 0 1 7 0" stroke-linecap="round"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
-      <svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x=".75" y=".75" width="21.5" height="10.5" rx="2.25" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="2" width="15" height="8" rx="1" fill="currentColor"/><path d="M23.5 4.5a2 2 0 0 1 0 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-    </div>
-  </div>
+      /* MODAL STYLES */
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+      .modal-content {
+        background: var(--white);
+        border-radius: 14px;
+        padding: 20px;
+        width: 90%;
+        max-width: 350px;
+        border: 1px solid var(--g100);
+      }
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .modal-header h3 {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--g900);
+        margin: 0;
+      }
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: var(--g500);
+        cursor: pointer;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: background 0.15s;
+      }
+      .modal-close:hover {
+        background: var(--g100);
+      }
+      .modal-body {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .modal-body label {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--g700);
+      }
+      .modal-body select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--g300);
+        border-radius: 8px;
+        font-family: var(--font);
+        font-size: 14px;
+      }
+      .expiry-display {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background: var(--g50);
+        border-radius: 8px;
+        border: 1px solid var(--g100);
+      }
+      .expiry-display label {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--g700);
+      }
+      #expiry-date {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--g900);
+        font-family: var(--mono);
+      }
+      .modal-footer {
+        margin-top: 16px;
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="phone">
+      <div class="notch">
+        <div class="notch-mic"></div>
+        <div class="notch-cam"></div>
+      </div>
+      <div class="status-bar">
+        <span class="sb-time">9:41</span>
+        <div class="sb-icons">
+          <svg width="16" height="12" fill="currentColor" viewBox="0 0 16 12">
+            <rect x="0" y="4" width="3" height="8" rx="1" />
+            <rect x="4.5" y="2.5" width="3" height="9.5" rx="1" />
+            <rect x="9" y="1" width="3" height="11" rx="1" />
+            <rect x="13.5" y="0" width="2.5" height="12" rx="1" opacity=".25" />
+          </svg>
+          <svg
+            width="16"
+            height="12"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M1.5 8.5a13 13 0 0 1 21 0M5 12a10 10 0 0 1 14 0M8.5 15.5a6 6 0 0 1 7 0"
+              stroke-linecap="round"
+            />
+            <circle cx="12" cy="19" r="1" fill="currentColor" />
+          </svg>
+          <svg width="26" height="12" viewBox="0 0 26 12" fill="none">
+            <rect
+              x=".75"
+              y=".75"
+              width="21.5"
+              height="10.5"
+              rx="2.25"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <rect
+              x="2"
+              y="2"
+              width="15"
+              height="8"
+              rx="1"
+              fill="currentColor"
+            />
+            <path
+              d="M23.5 4.5a2 2 0 0 1 0 3"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+      </div>
 
-  <div class="screens">
-
-    <!-- HOME -->
-    <div id="s1" class="screen active">
-      <div class="home-hd">
-        <div class="hd-top">
-          <div>
-            <div class="hd-greet">Hello 👋</div>
-            <div class="hd-name">Nithish Ravella (P123)</div>
-            <div class="hd-store"><span class="hd-store-txt">Brigade Road Dark Store</span></div>
-            <div class="hd-status"><div class="hd-dot"></div><span class="hd-store-txt">Active</span></div>
+      <div class="screens">
+        <!-- WELCOME -->
+        <div id="s0" class="screen active welcome-screen">
+          <div class="welcome-wrapper">
+            <img
+              src="DocPharma Picker.svg"
+              alt="DocPharma Logo"
+              class="welcome-logo"
+            />
           </div>
-          <div class="av">NR</div>
+          <div class="welcome-action">
+            <div class="welcome-text">Continue to Login</div>
+            <button class="cta cta-p welcome-button" onclick="go('login')">
+              Continue
+            </button>
+          </div>
+        </div>
+
+        <!-- LOGIN -->
+        <div id="login" class="screen">
+          <div class="topbar" style="justify-content: center">
+            <button class="back-btn" onclick="go('s0')">
+              <svg
+                width="16"
+                height="16"
+                fill="none"
+                stroke="#374151"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path d="M19 12H5M12 5l-7 7 7 7" />
+              </svg>
+            </button>
+            <div style="flex: 1">
+              <div class="tb-title">Log In</div>
+              <div class="tb-sub">Enter registered mobile number</div>
+            </div>
+          </div>
+          <div
+            style="
+              padding: 24px;
+              display: flex;
+              flex-direction: column;
+              gap: 16px;
+            "
+          >
+            <div class="auth-card" style="padding: 20px">
+              <label class="input-label" for="phone-input">Phone number</label>
+              <div class="phone-input">
+                <span class="country-code">+91</span>
+                <input
+                  id="phone-input"
+                  type="tel"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
+                  maxlength="10"
+                  placeholder="Enter 10-digit mobile number"
+                  autocomplete="tel"
+                />
+              </div>
+              <div
+                id="phone-error"
+                class="auth-error"
+                style="display: none"
+              ></div>
+              <button
+                class="cta cta-p"
+                style="margin-top: 12px"
+                onclick="sendOTP()"
+              >
+                Login
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- OTP -->
+        <div id="otp" class="screen">
+          <div class="topbar">
+            <button class="back-btn" onclick="go('login')">
+              <svg
+                width="16"
+                height="16"
+                fill="none"
+                stroke="#374151"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path d="M19 12H5M12 5l-7 7 7 7" />
+              </svg>
+            </button>
+            <div style="flex: 1">
+              <div class="tb-title">Enter OTP to verify</div>
+              <div class="tb-sub">Enter the code sent to your phone</div>
+            </div>
+          </div>
+          <div
+            style="
+              padding: 24px;
+              display: flex;
+              flex-direction: column;
+              gap: 16px;
+            "
+          >
+            <div class="auth-card" style="padding: 22px">
+              <div
+                style="font-size: 14px; color: var(--g700); margin-bottom: 14px"
+              >
+                We have sent a OTP to
+                <span
+                  id="otp-phone-display"
+                  style="font-weight: 700; color: var(--g900)"
+                ></span>
+              </div>
+              <div class="otp-row">
+                <input class="otp-input" maxlength="1" inputmode="numeric" />
+                <input class="otp-input" maxlength="1" inputmode="numeric" />
+                <input class="otp-input" maxlength="1" inputmode="numeric" />
+                <input class="otp-input" maxlength="1" inputmode="numeric" />
+              </div>
+              <div
+                id="otp-error"
+                class="auth-error"
+                style="display: none"
+              ></div>
+              <button
+                class="cta cta-p"
+                style="margin-top: 12px"
+                onclick="verifyOTP()"
+              >
+                Verify OTP
+              </button>
+              <button class="cta-sec" onclick="resendOTP()">Resend OTP</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- HOME -->
+        <div id="s1" class="screen">
+          <div class="home-hd">
+            <div class="hd-top">
+              <div>
+                <div class="hd-greet">Hello 👋</div>
+                <div class="hd-name">Nithish Ravella (P123)</div>
+                <div class="hd-store">
+                  <span class="hd-store-txt">Brigade Road Dark Store</span>
+                </div>
+                <div class="hd-status">
+                  <div class="hd-dot"></div>
+                  <span class="hd-store-txt">Active</span>
+                </div>
+              </div>
+              <div class="av">NR</div>
+            </div>
+          </div>
+          <div class="sec-lbl">Active Tasks</div>
+          <div class="active-card pk">
+            <div class="ac-shine"></div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 8px;
+              "
+            >
+              <div class="ac-id">ORD-004821</div>
+              <div class="ac-badge">
+                <svg
+                  width="11"
+                  height="11"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                Picking
+              </div>
+            </div>
+            <div class="ac-meta">5 SKUs &nbsp;·&nbsp; 09 Mar 2025, 15:10</div>
+            <div class="ac-track">
+              <div class="ac-fill" style="width: 60%"></div>
+            </div>
+            <div class="ac-prog-lbl">3 of 5 items picked</div>
+            <button class="ac-btn" onclick="go('p1')">Continue Picking</button>
+          </div>
+          <div class="active-card pa">
+            <div class="ac-shine"></div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 8px;
+              "
+            >
+              <div class="ac-id">PA-000012</div>
+              <div class="ac-badge">
+                <svg
+                  width="11"
+                  height="11"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                Put Away
+              </div>
+            </div>
+            <div class="ac-meta">5 SKUs &nbsp;·&nbsp; 09 Mar 2025, 15:10</div>
+            <div class="ac-track">
+              <div class="ac-fill" style="width: 60%"></div>
+            </div>
+            <div class="ac-prog-lbl">3 of 5 items placed</div>
+            <button class="ac-btn" onclick="go('s2')">Continue Put Away</button>
+          </div>
+          <div class="sec-lbl">Pending Tasks</div>
+          <div class="task-row" onclick="go('p1')">
+            <div class="tr-icon pk">
+              <svg
+                width="17"
+                height="17"
+                fill="none"
+                stroke="var(--pk)"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+              </svg>
+            </div>
+            <div class="tr-info">
+              <div class="tr-id">ORD-004821</div>
+              <div class="tr-meta">3 SKUs &nbsp;·&nbsp; 09 Mar 2025, 15:22</div>
+            </div>
+            <div class="tr-badges">
+              <div class="ttb ttb-pk">Picking</div>
+              <div class="ot ot-hl">HL</div>
+              <svg
+                width="13"
+                height="13"
+                fill="none"
+                stroke="#9CA3AF"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+          </div>
+          <div class="task-row" onclick="go('s2')">
+            <div class="tr-icon pa">
+              <svg
+                width="17"
+                height="17"
+                fill="none"
+                stroke="var(--blue)"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+            </div>
+            <div class="tr-info">
+              <div class="tr-id">PA-000011</div>
+              <div class="tr-meta">3 SKUs &nbsp;·&nbsp; 07 Mar 2025, 10:30</div>
+            </div>
+            <div class="tr-badges">
+              <div class="ttb ttb-pa">Put Away</div>
+              <svg
+                width="13"
+                height="13"
+                fill="none"
+                stroke="#9CA3AF"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+          </div>
+          <div style="height: 20px"></div>
+        </div>
+
+        <!-- PUT AWAY: TASK DETAIL -->
+        <div id="s2" class="screen">
+          <div class="topbar">
+            <button class="back-btn" onclick="go('s1')">
+              <svg
+                width="16"
+                height="16"
+                fill="none"
+                stroke="#374151"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path d="M19 12H5M12 5l-7 7 7 7" />
+              </svg>
+            </button>
+            <div style="flex: 1">
+              <div style="display: flex; align-items: center; gap: 8px">
+                <div class="tb-title">PA-000012</div>
+                <div class="ttb ttb-pa">Put Away</div>
+              </div>
+              <div class="tb-sub">Put Away Task</div>
+            </div>
+          </div>
+          <div class="info-strip">
+            <div class="is-row">
+              <span class="is-k">Invoice</span
+              ><span class="is-v">INV-DPH-001</span>
+            </div>
+            <div class="is-row">
+              <span class="is-k">Assigned</span
+              ><span class="is-v">09 Mar 2025, 15:10</span>
+            </div>
+            <div class="is-row">
+              <span class="is-k">Total SKUs</span
+              ><span class="is-v">5 items</span>
+            </div>
+            <div class="is-row">
+              <span class="is-k">Progress</span
+              ><span class="is-v" style="color: var(--green)"
+                >3 / 5 placed</span
+              >
+            </div>
+          </div>
+          <div class="sec-lbl" style="padding-top: 12px">Products</div>
+          <div class="prod-list">
+            <div class="pr done">
+              <div class="pr-dot d"></div>
+              <div class="pr-info">
+                <div class="pr-name">Crocin Advance 500mg</div>
+                <div class="pr-sub">BT-232 · DP-0018233</div>
+              </div>
+              <div class="pr-chk">
+                <svg
+                  width="11"
+                  height="11"
+                  fill="none"
+                  stroke="#0D7A4E"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M20 6 9 17l-5-5" />
+                </svg>
+              </div>
+            </div>
+            <div class="pr done">
+              <div class="pr-dot d"></div>
+              <div class="pr-info">
+                <div class="pr-name">Pan-D Capsule</div>
+                <div class="pr-sub">BT-001 · DP-00183</div>
+              </div>
+              <div class="pr-chk">
+                <svg
+                  width="11"
+                  height="11"
+                  fill="none"
+                  stroke="#0D7A4E"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M20 6 9 17l-5-5" />
+                </svg>
+              </div>
+            </div>
+            <div class="pr done">
+              <div class="pr-dot d"></div>
+              <div class="pr-info">
+                <div class="pr-name">Pan-D Capsule</div>
+                <div class="pr-sub">BT-002 · DP-00183</div>
+              </div>
+              <div class="pr-chk">
+                <svg
+                  width="11"
+                  height="11"
+                  fill="none"
+                  stroke="#0D7A4E"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M20 6 9 17l-5-5" />
+                </svg>
+              </div>
+            </div>
+            <div class="pr pa-h" onclick="go('s3')">
+              <div class="pr-dot p"></div>
+              <div class="pr-info">
+                <div class="pr-name">Augmentin 625mg Tablet</div>
+                <div class="pr-sub">BT-001 · DP-00183</div>
+              </div>
+              <div class="pr-qty">200</div>
+              <svg
+                width="14"
+                height="14"
+                fill="none"
+                stroke="#9CA3AF"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+            <div class="pr pa-h" onclick="go('s3')">
+              <div class="pr-dot p"></div>
+              <div class="pr-info">
+                <div class="pr-name">Montair LC Kid Tablet</div>
+                <div class="pr-sub">BT-001 · DP-001832</div>
+              </div>
+              <div class="pr-qty">80</div>
+              <svg
+                width="14"
+                height="14"
+                fill="none"
+                stroke="#9CA3AF"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+          </div>
+          <div class="bot">
+            <button class="cta cta-p" onclick="go('s3')">
+              Continue Put Away
+            </button>
+          </div>
+        </div>
+
+        <!-- PUT AWAY: SCAN PRODUCT -->
+        <div id="s3" class="screen">
+          <div class="topbar">
+            <button class="back-btn" onclick="go('s2')">
+              <svg
+                width="16"
+                height="16"
+                fill="none"
+                stroke="#374151"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path d="M19 12H5M12 5l-7 7 7 7" />
+              </svg>
+            </button>
+            <div><div class="tb-title">Scan Product</div></div>
+          </div>
+          <div class="step-bar">
+            <span class="sbar-step">Step 1 of 3</span>
+            <div class="sbar-div"></div>
+            <span class="sbar-lbl">Scan a product QR label</span>
+            <div class="sbar-dots">
+              <div class="sdot on"></div>
+              <div class="sdot"></div>
+              <div class="sdot"></div>
+            </div>
+          </div>
+          <div class="scan-wrap">
+            <div class="scan-grid"></div>
+            <div class="scan-frame">
+              <div class="sc sc-tl"></div>
+              <div class="sc sc-tr"></div>
+              <div class="sc sc-bl"></div>
+              <div class="sc sc-br"></div>
+              <div class="scan-line"></div>
+            </div>
+            <div class="scan-hint">
+              Point camera at the QR label on the product
+            </div>
+          </div>
+          <div class="pdc">
+            <div class="pdc-name">Augmentin 625mg Tablet</div>
+            <div class="pdc-row">
+              <span class="pdc-k">DP-ID</span
+              ><span class="pdc-v">DP-00441</span>
+            </div>
+            <div class="pdc-row">
+              <span class="pdc-k">Partner</span
+              ><span class="pdc-v">MedPlus</span>
+            </div>
+            <div class="pdc-row">
+              <span class="pdc-k">Batch</span
+              ><span class="pdc-v">BT-GSK-0881</span>
+            </div>
+            <div class="pdc-row">
+              <span class="pdc-k">Destination</span
+              ><span class="pdc-v" style="color: var(--blue)"
+                >A-R01-S02-B03</span
+              >
+            </div>
+          </div>
+          <div class="bot">
+            <button class="cta cta-p" onclick="go('s4')">
+              Simulate Scan ✓ — Next</button
+            ><button class="cta-sec">
+              If QR code is not readable, Replace with new
+            </button>
+          </div>
+        </div>
+
+        <!-- PUT AWAY: QUANTITY (non-editable) -->
+        <div id="s4" class="screen">
+          <div class="topbar">
+            <button class="back-btn" onclick="go('s3')">
+              <svg
+                width="16"
+                height="16"
+                fill="none"
+                stroke="#374151"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path d="M19 12H5M12 5l-7 7 7 7" />
+              </svg>
+            </button>
+            <div><div class="tb-title">Quantity to Place</div></div>
+          </div>
+          <div class="step-bar">
+            <span class="sbar-step">Step 2 of 3</span>
+            <div class="sbar-div"></div>
+            <span class="sbar-lbl">Confirm quantity to place</span>
+            <div class="sbar-dots">
+              <div class="sdot"></div>
+              <div class="sdot on"></div>
+              <div class="sdot"></div>
+            </div>
+          </div>
+          <div class="pdc" style="margin-top: 14px">
+            <div class="pdc-name">Augmentin 625mg Tablet</div>
+            <div class="pdc-row">
+              <span class="pdc-k">Batch</span
+              ><span class="pdc-v">BT-GSK-0881</span>
+            </div>
+            <div class="pdc-row">
+              <span class="pdc-k">Partner</span
+              ><span class="pdc-v">MedPlus</span>
+            </div>
+            <div class="pdc-row">
+              <span class="pdc-k">Location</span
+              ><span class="pdc-v" style="color: var(--blue)"
+                >A-R01-S02-B03</span
+              >
+            </div>
+          </div>
+          <div class="qty-box">
+            <div class="qty-lbl">Quantity to Place</div>
+            <div class="qty-display">
+              <div class="qty-num">200</div>
+              <div class="qty-unit">units</div>
+            </div>
+            <div class="qty-note">
+              This quantity is fixed from the inward receipt and
+              <b>cannot be changed.</b> Place exactly <b>200 units</b> at the
+              designated location.
+            </div>
+          </div>
+          <div class="bot">
+            <button class="cta cta-p" onclick="go('s5')">
+              Next — Scan Location →
+            </button>
+          </div>
+        </div>
+
+        <!-- PUT AWAY: SCAN LOCATION -->
+        <div id="s5" class="screen">
+          <div class="topbar">
+            <button class="back-btn" onclick="go('s4')">
+              <svg
+                width="16"
+                height="16"
+                fill="none"
+                stroke="#374151"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path d="M19 12H5M12 5l-7 7 7 7" />
+              </svg>
+            </button>
+            <div><div class="tb-title">Scan Location</div></div>
+          </div>
+          <div class="step-bar">
+            <span class="sbar-step">Step 3 of 3</span>
+            <div class="sbar-div"></div>
+            <span class="sbar-lbl">Confirm bin placement</span>
+            <div class="sbar-dots">
+              <div class="sdot"></div>
+              <div class="sdot"></div>
+              <div class="sdot on"></div>
+            </div>
+          </div>
+          <div class="loc-card">
+            <div class="lc-glow"></div>
+            <div class="lc-lbl">Navigate to this location</div>
+            <div class="lc-name">A-R01-S02-B03</div>
+            <div class="lc-chips">
+              <div class="lc-chip">Aisle A</div>
+              <div class="lc-chip">Rack 01</div>
+              <div class="lc-chip">Shelf 02</div>
+              <div class="lc-chip">Bin 03</div>
+            </div>
+          </div>
+          <div class="scan-wrap" id="sw-loc">
+            <div class="scan-grid"></div>
+            <div class="scan-frame">
+              <div class="sc sc-tl"></div>
+              <div class="sc sc-tr"></div>
+              <div class="sc sc-bl"></div>
+              <div class="sc sc-br"></div>
+              <div class="scan-line"></div>
+            </div>
+            <div class="scan-hint">Scan the QR code on the bin</div>
+          </div>
+          <div class="err-banner" id="eb-loc">
+            <div class="eb-icon">!</div>
+            <div class="eb-txt">
+              Wrong location scanned. Navigate to <b>A-R01-S02-B03</b> and scan
+              that bin's QR code.
+            </div>
+          </div>
+          <div class="bot">
+            <button class="cta cta-p" onclick="scanLocOk()">
+              Simulate Correct Scan ✓</button
+            ><button class="cta-sec" onclick="scanLocBad()">
+              Simulate Wrong Scan ✗
+            </button>
+          </div>
+        </div>
+
+        <!-- PUT AWAY: PLACED -->
+        <div id="s6" class="screen">
+          <div class="topbar">
+            <div style="width: 36px"></div>
+            <div style="flex: 1; text-align: center">
+              <div class="tb-title">Item Placed ✓</div>
+            </div>
+            <div style="width: 36px"></div>
+          </div>
+          <div class="success-full">
+            <div class="si grn">
+              <svg
+                width="36"
+                height="36"
+                fill="none"
+                stroke="#0D7A4E"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+            </div>
+            <div class="s-title">Placed Successfully</div>
+            <div class="s-sub">
+              Augmentin 625mg confirmed at the correct bin location.
+            </div>
+            <div class="s-card grn">
+              <div class="sc-row">
+                <span class="sc-k">Product</span
+                ><span class="sc-v">DP-00441</span>
+              </div>
+              <div class="sc-row">
+                <span class="sc-k">Batch</span
+                ><span class="sc-v">BT-GSK-0881</span>
+              </div>
+              <div class="sc-row">
+                <span class="sc-k">Location</span
+                ><span class="sc-v">A-R01-S02-B03</span>
+              </div>
+              <div class="sc-row">
+                <span class="sc-k">Qty Placed</span
+                ><span class="sc-v">200 units</span>
+              </div>
+            </div>
+            <button
+              class="cta cta-gr"
+              style="width: 100%; margin-bottom: 10px"
+              onclick="go('s2')"
+            >
+              Place Next Item →
+            </button>
+            <button class="cta-sec" onclick="go('s7')">
+              Complete Task (demo)
+            </button>
+          </div>
+        </div>
+
+        <!-- PUT AWAY: COMPLETE -->
+        <div id="s7" class="screen">
+          <div class="complete-full">
+            <div class="cc-icon">
+              <svg
+                width="38"
+                height="38"
+                fill="none"
+                stroke="#0D7A4E"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+            </div>
+            <div class="cc-title">Put Away Complete</div>
+            <div class="cc-sub">
+              All 5 items in PA-000012 placed and confirmed. Inventory updated.
+            </div>
+            <div class="cc-grid">
+              <div class="cc-stat">
+                <div class="cc-v">5</div>
+                <div class="cc-l">Items Placed</div>
+              </div>
+              <div class="cc-stat">
+                <div class="cc-v">1</div>
+                <div class="cc-l">Invoice</div>
+              </div>
+              <div class="cc-stat">
+                <div class="cc-v">09 Mar</div>
+                <div class="cc-l">Date</div>
+              </div>
+              <div class="cc-stat">
+                <div class="cc-v">16:42</div>
+                <div class="cc-l">Completed</div>
+              </div>
+            </div>
+            <button class="cta cta-wh" style="width: 100%" onclick="go('s1')">
+              Back to Home
+            </button>
+          </div>
+        </div>
+
+        <!-- PICKING: ORDER DETAIL -->
+        <div id="p1" class="screen">
+          <div class="topbar">
+            <button class="back-btn" onclick="go('s1')">
+              <svg
+                width="16"
+                height="16"
+                fill="none"
+                stroke="#374151"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path d="M19 12H5M12 5l-7 7 7 7" />
+              </svg>
+            </button>
+            <div style="flex: 1">
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 7px;
+                  flex-wrap: wrap;
+                "
+              >
+                <div class="tb-title">ORD-004821</div>
+                <div class="ot ot-hl">HL</div>
+                <div class="ttb ttb-pk">Picking</div>
+              </div>
+            </div>
+          </div>
+          <div class="info-strip">
+            <div class="is-row">
+              <span class="is-k">Order ID</span
+              ><span class="is-v">ORD-004821</span>
+            </div>
+            <div class="is-row">
+              <span class="is-k">Order Type</span><span class="is-v">HL</span>
+            </div>
+            <div class="is-row">
+              <span class="is-k">Assigned</span
+              ><span class="is-v">03:22 PM, 09 Mar 2025</span>
+            </div>
+            <div class="is-row">
+              <span class="is-k">Total SKUs</span
+              ><span class="is-v">3 items</span>
+            </div>
+            <div class="is-row">
+              <span class="is-k">Progress</span
+              ><span class="is-v" style="color: var(--g500)">0 / 3 picked</span>
+            </div>
+          </div>
+          <div class="sec-lbl" style="padding-top: 12px">Items to Pick</div>
+          <div class="prod-list">
+            <div class="pr pk-h" onclick="go('p2')">
+              <div class="pr-dot p"></div>
+              <div class="pr-info">
+                <div class="pr-name">Dolo 650mg Tablet</div>
+                <div class="pr-sub">B-R02-S01-B04 · DP-00091</div>
+              </div>
+              <div class="pr-qty">2</div>
+              <svg
+                width="14"
+                height="14"
+                fill="none"
+                stroke="#9CA3AF"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+            <div class="pr pk-h" onclick="go('p2')">
+              <div class="pr-dot p"></div>
+              <div class="pr-info">
+                <div class="pr-name">Cetirizine 10mg Tablet</div>
+                <div class="pr-sub">A-R03-S02-B01 · DP-00204</div>
+              </div>
+              <div class="pr-qty">1</div>
+              <svg
+                width="14"
+                height="14"
+                fill="none"
+                stroke="#9CA3AF"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+            <div class="pr pk-h" onclick="go('p2')">
+              <div class="pr-dot p"></div>
+              <div class="pr-info">
+                <div class="pr-name">Volini Spray 55g</div>
+                <div class="pr-sub">C-R01-S03-B02 · DP-00318</div>
+              </div>
+              <div class="pr-qty">1</div>
+              <svg
+                width="14"
+                height="14"
+                fill="none"
+                stroke="#9CA3AF"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </div>
+          </div>
+          <div class="bot">
+            <button class="cta cta-pk" onclick="go('p2')">
+              <svg
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" /></svg
+              >Start Picking
+            </button>
+          </div>
+        </div>
+
+        <!-- PICKING: SCAN PRODUCT -->
+        <div id="p2" class="screen">
+          <div class="topbar">
+            <button class="back-btn" onclick="go('p1')">
+              <svg
+                width="16"
+                height="16"
+                fill="none"
+                stroke="#374151"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path d="M19 12H5M12 5l-7 7 7 7" />
+              </svg>
+            </button>
+            <div><div class="tb-title">Scan Product</div></div>
+          </div>
+          <div class="step-bar">
+            <span class="sbar-step pk">Step 1 of 2</span>
+            <div class="sbar-div"></div>
+            <span class="sbar-lbl">Navigate, pick & scan product</span>
+            <div class="sbar-dots">
+              <div class="sdot on pk"></div>
+              <div class="sdot"></div>
+            </div>
+          </div>
+
+          <div class="loc-card pk">
+            <div class="lc-glow"></div>
+            <div class="lc-lbl">Go to this location</div>
+            <div class="lc-name">B-R02-S01-B04</div>
+            <div class="lc-chips">
+              <div class="lc-chip">Aisle B</div>
+              <div class="lc-chip">Rack 02</div>
+              <div class="lc-chip">Shelf 01</div>
+              <div class="lc-chip">Bin 04</div>
+            </div>
+          </div>
+          <div class="prod-img">
+            <div class="prod-img-box">
+              <svg
+                width="30"
+                height="30"
+                fill="none"
+                stroke="var(--pk)"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <polyline points="21 15 16 10 5 21" />
+              </svg>
+            </div>
+            <div>
+              <div class="pii-name">Dolo 650mg Tablet</div>
+              <div class="pii-meta">
+                Strip of 15 Tablets &nbsp;·&nbsp; Micro Labs Ltd.
+              </div>
+            </div>
+          </div>
+          <div class="scan-wrap" id="sw-pick">
+            <div class="scan-grid"></div>
+            <div class="scan-frame">
+              <div class="sc sc-tl" style="border-color: var(--pk)"></div>
+              <div class="sc sc-tr" style="border-color: var(--pk)"></div>
+              <div class="sc sc-bl" style="border-color: var(--pk)"></div>
+              <div class="sc sc-br" style="border-color: var(--pk)"></div>
+              <div class="scan-line pk"></div>
+            </div>
+            <div class="scan-hint">Scan the QR label on the product</div>
+          </div>
+          <div class="err-banner" id="eb-pick">
+            <div class="eb-icon">!</div>
+            <div class="eb-txt">
+              Wrong product scanned. Please find
+              <b>Dolo 650mg Tablet (DP-00091)</b> and scan its QR label.
+            </div>
+          </div>
+          <div class="bot">
+            <button class="cta-sec pk" onclick="showBatchModal()">
+              Can't scan — enter manually
+            </button>
+          </div>
+          <div class="bot">
+            <button class="cta cta-pk" onclick="pickScanOk()">
+              Simulate Correct Scan ✓</button
+            ><button class="cta-sec pk" onclick="pickScanBad()">
+              Simulate Wrong Product ✗
+            </button>
+          </div>
+        </div>
+
+        <!-- PICKING: CONFIRM ITEM -->
+        <div id="p3" class="screen">
+          <div class="topbar">
+            <button class="back-btn" onclick="go('p2')">
+              <svg
+                width="16"
+                height="16"
+                fill="none"
+                stroke="#374151"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path d="M19 12H5M12 5l-7 7 7 7" />
+              </svg>
+            </button>
+            <div><div class="tb-title">Confirm Pick</div></div>
+          </div>
+          <div class="step-bar">
+            <span class="sbar-step pk">Step 2 of 2</span>
+            <div class="sbar-div"></div>
+            <span class="sbar-lbl">Verify &amp; confirm the item</span>
+            <div class="sbar-dots">
+              <div class="sdot"></div>
+              <div class="sdot on pk"></div>
+            </div>
+          </div>
+          <div class="prod-img" style="margin-top: 14px">
+            <div
+              class="prod-img-box"
+              style="
+                background: var(--green-l);
+                border-color: rgba(13, 122, 78, 0.1);
+              "
+            >
+              <svg
+                width="30"
+                height="30"
+                fill="none"
+                stroke="var(--green)"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <polyline points="21 15 16 10 5 21" />
+              </svg>
+            </div>
+            <div>
+              <div class="pii-name">Dolo 650mg Tablet</div>
+              <div
+                class="pii-meta"
+                style="color: var(--green); font-weight: 600"
+              >
+                ✓ Product verified
+              </div>
+            </div>
+          </div>
+          <div class="pdc">
+            <div class="pdc-row">
+              <span class="pdc-k">DP-ID</span
+              ><span class="pdc-v">DP-00091</span>
+            </div>
+            <div class="pdc-row">
+              <span class="pdc-k">Batch (from QR)</span
+              ><span class="pdc-v" style="color: var(--green)"
+                >BT-MCL-2241</span
+              >
+            </div>
+            <div class="pdc-row">
+              <span class="pdc-k">Expiry (from QR)</span
+              ><span class="pdc-v" style="color: var(--green)">2027-03</span>
+            </div>
+            <div class="pdc-row">
+              <span class="pdc-k">Qty Required</span
+              ><span class="pdc-v">2 units</span>
+            </div>
+            <div class="pdc-row">
+              <span class="pdc-k">Scan Progress</span
+              ><span class="pdc-v" style="color: var(--pk)"
+                >1 of 2 scanned</span
+              >
+            </div>
+          </div>
+          <div
+            style="
+              margin: 10px 14px 0;
+              background: var(--pk-l);
+              border: 1px solid rgba(192, 86, 33, 0.15);
+              border-radius: 12px;
+              padding: 13px;
+              font-size: 13px;
+              color: var(--pk-d);
+              font-weight: 500;
+              line-height: 1.5;
+            "
+          >
+            This item requires <b>2 units.</b> Scan the product QR one more time
+            for the second unit.
+          </div>
+          <div class="bot">
+            <button class="cta cta-pk" onclick="go('p4')">
+              Scan Second Unit →
+            </button>
+          </div>
+        </div>
+
+        <!-- PICKING: REVIEW -->
+        <div id="p4" class="screen">
+          <div class="topbar">
+            <button class="back-btn" onclick="go('p3')">
+              <svg
+                width="16"
+                height="16"
+                fill="none"
+                stroke="#374151"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path d="M19 12H5M12 5l-7 7 7 7" />
+              </svg>
+            </button>
+            <div><div class="tb-title">Review &amp; Confirm</div></div>
+          </div>
+          <div
+            style="
+              margin: 14px 14px 0;
+              background: var(--pk-l);
+              border-radius: 12px;
+              padding: 13px;
+              display: flex;
+              align-items: center;
+              gap: 9px;
+              border: 1px solid rgba(192, 86, 33, 0.15);
+            "
+          >
+            <svg
+              width="18"
+              height="18"
+              fill="none"
+              stroke="var(--pk)"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path d="M20 6 9 17l-5-5" /></svg
+            ><span style="font-size: 13px; color: var(--pk); font-weight: 600"
+              >All 3 items picked — review before confirming</span
+            >
+          </div>
+          <div class="review-card">
+            <div class="rc-title">Picked Items Summary</div>
+            <div class="rc-row">
+              <div class="rc-prod">
+                Dolo 650mg Tablet <span style="color: var(--g300)">×2</span>
+              </div>
+              <div class="rc-detail">BT-MCL-2241 · 2027-03</div>
+            </div>
+            <div class="rc-row">
+              <div class="rc-prod">
+                Cetirizine 10mg Tablet
+                <span style="color: var(--g300)">×1</span>
+              </div>
+              <div class="rc-detail">BT-SUN-0918 · 2026-11</div>
+            </div>
+            <div class="rc-row">
+              <div class="rc-prod">
+                Volini Spray 55g <span style="color: var(--g300)">×1</span>
+              </div>
+              <div class="rc-detail">BT-SHL-0042 · 2027-06</div>
+            </div>
+          </div>
+          <div
+            style="
+              margin: 10px 14px 0;
+              background: #fef3c7;
+              border: 1px solid rgba(180, 83, 9, 0.15);
+              border-radius: 12px;
+              padding: 13px;
+              font-size: 13px;
+              color: #92400e;
+              line-height: 1.5;
+            "
+          >
+            After confirming, an invoice will be auto-generated in WMS. Print it
+            from WMS and attach to the packed package.
+          </div>
+          <div class="bot">
+            <button class="cta cta-pk" onclick="go('p5')">
+              <svg
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20 6 9 17l-5-5" /></svg
+              >Confirm All Picked
+            </button>
+          </div>
+        </div>
+
+        <!-- PICKING: INVOICE -->
+        <div id="p5" class="screen">
+          <div class="topbar">
+            <div style="width: 36px"></div>
+            <div style="flex: 1; text-align: center">
+              <div class="tb-title">Invoice Generated</div>
+            </div>
+            <div style="width: 36px"></div>
+          </div>
+          <div class="success-full">
+            <div class="si pk">
+              <svg
+                width="36"
+                height="36"
+                fill="none"
+                stroke="var(--pk)"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+            </div>
+            <div class="s-title">All Items Picked</div>
+            <div class="s-sub">
+              Invoice INV-ORD-004821 generated in WMS. Print and attach to
+              package.
+            </div>
+            <div class="s-card pk">
+              <div class="sc-row">
+                <span class="sc-k">Order ID</span
+                ><span class="sc-v">ORD-004821</span>
+              </div>
+              <div class="sc-row">
+                <span class="sc-k">Invoice</span
+                ><span class="sc-v">INV-ORD-004821</span>
+              </div>
+              <div class="sc-row">
+                <span class="sc-k">Items</span
+                ><span class="sc-v">3 SKUs · 4 units</span>
+              </div>
+              <div class="sc-row">
+                <span class="sc-k">Order Type</span><span class="sc-v">HL</span>
+              </div>
+            </div>
+            <div
+              style="
+                width: 100%;
+                background: var(--pk-l);
+                border-radius: 12px;
+                padding: 14px;
+                border: 1px solid rgba(192, 86, 33, 0.15);
+                margin-bottom: 18px;
+                text-align: left;
+              "
+            >
+              <div
+                style="
+                  font-size: 12px;
+                  font-weight: 700;
+                  color: var(--pk);
+                  margin-bottom: 6px;
+                  text-transform: uppercase;
+                  letter-spacing: 0.4px;
+                "
+              >
+                Next Steps
+              </div>
+              <div
+                style="font-size: 14px; color: var(--pk-d); line-height: 1.8"
+              >
+                1. Go to WMS → print invoice<br />2. Pack all items<br />3.
+                Attach invoice to package<br />4. Hand over to delivery rider
+              </div>
+            </div>
+            <button
+              class="cta cta-gr"
+              style="width: 100%; margin-bottom: 10px"
+              onclick="go('p6')"
+            >
+              Mark as Handed Over →
+            </button>
+          </div>
+        </div>
+
+        <!-- PICKING: COMPLETE -->
+        <div id="p6" class="screen">
+          <div class="complete-full">
+            <div class="cc-icon">
+              <svg
+                width="38"
+                height="38"
+                fill="none"
+                stroke="#0D7A4E"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+            </div>
+            <div class="cc-title">Order Dispatched</div>
+            <div class="cc-sub">
+              ORD-004821 packed and handed to the delivery rider.
+            </div>
+            <div class="cc-grid">
+              <div class="cc-stat">
+                <div class="cc-v">3</div>
+                <div class="cc-l">SKUs Picked</div>
+              </div>
+              <div class="cc-stat">
+                <div class="cc-v">HL</div>
+                <div class="cc-l">Order Type</div>
+              </div>
+              <div class="cc-stat">
+                <div class="cc-v">09 Mar</div>
+                <div class="cc-l">Date</div>
+              </div>
+              <div class="cc-stat">
+                <div class="cc-v">15:38</div>
+                <div class="cc-l">Dispatched</div>
+              </div>
+            </div>
+            <button class="cta cta-wh" style="width: 100%" onclick="go('s1')">
+              Back to Home
+            </button>
+          </div>
         </div>
       </div>
-      <div class="sec-lbl">Active Tasks</div>
-      <div class="active-card pk">
-        <div class="ac-shine"></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <div class="ac-id">ORD-004821</div>
-          <div class="ac-badge"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Picking </div>
+    </div>
+
+    <!-- BATCH SELECTION MODAL -->
+    <div id="batch-modal" class="modal" style="display: none">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Select Batch</h3>
+          <button class="modal-close" onclick="hideBatchModal()">
+            &times;
+          </button>
         </div>
-        <div class="ac-meta">5 SKUs &nbsp;·&nbsp; 09 Mar 2025, 15:10</div>
-        <div class="ac-track"><div class="ac-fill" style="width:60%"></div></div>
-        <div class="ac-prog-lbl">3 of 5 items picked</div>
-        <button class="ac-btn" onclick="go('p1')">Continue Picking</button>
-      </div>
-      <div class="active-card pa">
-        <div class="ac-shine"></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <div class="ac-id">PA-000012</div>
-          <div class="ac-badge"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Put Away</div>
+        <div class="modal-body">
+          <label for="batch-select">Choose Batch:</label>
+          <select id="batch-select" onchange="updateExpiry()">
+            <option value="">Select a batch</option>
+            <option value="BT-MCL-2241">BT-MCL-2241</option>
+            <option value="BT-SUN-0918">BT-SUN-0918</option>
+            <option value="BT-SHL-0042">BT-SHL-0042</option>
+          </select>
+          <div class="expiry-display">
+            <label>Expiry Date:</label>
+            <span id="expiry-date">-</span>
+          </div>
         </div>
-        <div class="ac-meta">5 SKUs &nbsp;·&nbsp; 09 Mar 2025, 15:10</div>
-        <div class="ac-track"><div class="ac-fill" style="width:60%"></div></div>
-        <div class="ac-prog-lbl">3 of 5 items placed</div>
-        <button class="ac-btn" onclick="go('s2')">Continue Put Away</button>
-      </div>
-      <div class="sec-lbl">Pending Tasks</div>
-      <div class="task-row" onclick="go('p1')">
-        <div class="tr-icon pk"><svg width="17" height="17" fill="none" stroke="var(--pk)" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
-        <div class="tr-info"><div class="tr-id">ORD-004821</div><div class="tr-meta">3 SKUs &nbsp;·&nbsp; 09 Mar 2025, 15:22</div></div>
-        <div class="tr-badges"><div class="ttb ttb-pk">Picking</div><div class="ot ot-hl">HL</div><svg width="13" height="13" fill="none" stroke="#9CA3AF" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
-      </div>
-      <div class="task-row" onclick="go('s2')">
-        <div class="tr-icon pa"><svg width="17" height="17" fill="none" stroke="var(--blue)" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-        <div class="tr-info"><div class="tr-id">PA-000011</div><div class="tr-meta">3 SKUs &nbsp;·&nbsp; 07 Mar 2025, 10:30</div></div>
-        <div class="tr-badges"><div class="ttb ttb-pa">Put Away</div><svg width="13" height="13" fill="none" stroke="#9CA3AF" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
-      </div>
-      <div style="height:20px"></div>
-    </div>
-
-    <!-- PUT AWAY: TASK DETAIL -->
-    <div id="s2" class="screen">
-      <div class="topbar">
-        <button class="back-btn" onclick="go('s1')"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
-        <div style="flex:1"><div style="display:flex;align-items:center;gap:8px"><div class="tb-title">PA-000012</div><div class="ttb ttb-pa">Put Away</div></div><div class="tb-sub">Put Away Task</div></div>
-      </div>
-      <div class="info-strip">
-        <div class="is-row"><span class="is-k">Invoice</span><span class="is-v">INV-DPH-001</span></div>
-        <div class="is-row"><span class="is-k">Assigned</span><span class="is-v">09 Mar 2025, 15:10</span></div>
-        <div class="is-row"><span class="is-k">Total SKUs</span><span class="is-v">5 items</span></div>
-        <div class="is-row"><span class="is-k">Progress</span><span class="is-v" style="color:var(--green)">3 / 5 placed</span></div>
-      </div>
-      <div class="sec-lbl" style="padding-top:12px">Products</div>
-      <div class="prod-list">
-        <div class="pr done"><div class="pr-dot d"></div><div class="pr-info"><div class="pr-name">Crocin Advance 500mg</div><div class="pr-sub">BT-232 · DP-0018233</div></div><div class="pr-chk"><svg width="11" height="11" fill="none" stroke="#0D7A4E" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div></div>
-        <div class="pr done"><div class="pr-dot d"></div><div class="pr-info"><div class="pr-name">Pan-D Capsule</div><div class="pr-sub">BT-001 · DP-00183</div></div><div class="pr-chk"><svg width="11" height="11" fill="none" stroke="#0D7A4E" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div></div>
-        <div class="pr done"><div class="pr-dot d"></div><div class="pr-info"><div class="pr-name">Pan-D Capsule</div><div class="pr-sub">BT-002 · DP-00183</div></div><div class="pr-chk"><svg width="11" height="11" fill="none" stroke="#0D7A4E" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div></div>
-        <div class="pr pa-h" onclick="go('s3')"><div class="pr-dot p"></div><div class="pr-info"><div class="pr-name">Augmentin 625mg Tablet</div><div class="pr-sub">BT-001 · DP-00183</div></div><div class="pr-qty">200</div><svg width="14" height="14" fill="none" stroke="#9CA3AF" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
-        <div class="pr pa-h" onclick="go('s3')"><div class="pr-dot p"></div><div class="pr-info"><div class="pr-name">Montair LC Kid Tablet</div><div class="pr-sub">BT-001 · DP-001832</div></div><div class="pr-qty">80</div><svg width="14" height="14" fill="none" stroke="#9CA3AF" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
-      </div>
-      <div class="bot"><button class="cta cta-p" onclick="go('s3')">Continue Put Away</button></div>
-    </div>
-
-    <!-- PUT AWAY: SCAN PRODUCT -->
-    <div id="s3" class="screen">
-      <div class="topbar"><button class="back-btn" onclick="go('s2')"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button><div><div class="tb-title">Scan Product</div></div></div>
-      <div class="step-bar"><span class="sbar-step">Step 1 of 3</span><div class="sbar-div"></div><span class="sbar-lbl">Scan a product QR label</span><div class="sbar-dots"><div class="sdot on"></div><div class="sdot"></div><div class="sdot"></div></div></div>
-      <div class="scan-wrap"><div class="scan-grid"></div><div class="scan-frame"><div class="sc sc-tl"></div><div class="sc sc-tr"></div><div class="sc sc-bl"></div><div class="sc sc-br"></div><div class="scan-line"></div></div><div class="scan-hint">Point camera at the QR label on the product</div></div>
-      <div class="pdc"><div class="pdc-name">Augmentin 625mg Tablet</div><div class="pdc-row"><span class="pdc-k">DP-ID</span><span class="pdc-v">DP-00441</span></div><div class="pdc-row"><span class="pdc-k">Partner</span><span class="pdc-v">MedPlus</span></div><div class="pdc-row"><span class="pdc-k">Batch</span><span class="pdc-v">BT-GSK-0881</span></div><div class="pdc-row"><span class="pdc-k">Destination</span><span class="pdc-v" style="color:var(--blue)">A-R01-S02-B03</span></div></div>
-      <div class="bot"><button class="cta cta-p" onclick="go('s4')">Simulate Scan ✓ — Next</button><button class="cta-sec" >If QR code is not readable, Replace with new</button></div>
-    </div>
-
-    <!-- PUT AWAY: QUANTITY (non-editable) -->
-    <div id="s4" class="screen">
-      <div class="topbar"><button class="back-btn" onclick="go('s3')"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button><div><div class="tb-title">Quantity to Place</div></div></div>
-      <div class="step-bar"><span class="sbar-step">Step 2 of 3</span><div class="sbar-div"></div><span class="sbar-lbl">Confirm quantity to place</span><div class="sbar-dots"><div class="sdot"></div><div class="sdot on"></div><div class="sdot"></div></div></div>
-      <div class="pdc" style="margin-top:14px"><div class="pdc-name">Augmentin 625mg Tablet</div><div class="pdc-row"><span class="pdc-k">Batch</span><span class="pdc-v">BT-GSK-0881</span></div><div class="pdc-row"><span class="pdc-k">Partner</span><span class="pdc-v">MedPlus</span></div><div class="pdc-row"><span class="pdc-k">Location</span><span class="pdc-v" style="color:var(--blue)">A-R01-S02-B03</span></div></div>
-      <div class="qty-box">
-        <div class="qty-lbl">Quantity to Place</div>
-        <div class="qty-display">
-          <div class="qty-num">200</div>
-          <div class="qty-unit">units</div>
+        <div class="modal-footer">
+          <button class="cta cta-wh" onclick="confirmBatch()">Confirm</button>
         </div>
-        <div class="qty-note">This quantity is fixed from the inward receipt and <b>cannot be changed.</b> Place exactly <b>200 units</b> at the designated location.</div>
-      </div>
-      <div class="bot"><button class="cta cta-p" onclick="go('s5')">Next — Scan Location →</button></div>
-    </div>
-
-    <!-- PUT AWAY: SCAN LOCATION -->
-    <div id="s5" class="screen">
-      <div class="topbar"><button class="back-btn" onclick="go('s4')"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button><div><div class="tb-title">Scan Location</div></div></div>
-      <div class="step-bar"><span class="sbar-step">Step 3 of 3</span><div class="sbar-div"></div><span class="sbar-lbl">Confirm bin placement</span><div class="sbar-dots"><div class="sdot"></div><div class="sdot"></div><div class="sdot on"></div></div></div>
-      <div class="loc-card"><div class="lc-glow"></div><div class="lc-lbl">Navigate to this location</div><div class="lc-name">A-R01-S02-B03</div><div class="lc-chips"><div class="lc-chip">Aisle A</div><div class="lc-chip">Rack 01</div><div class="lc-chip">Shelf 02</div><div class="lc-chip">Bin 03</div></div></div>
-      <div class="scan-wrap" id="sw-loc"><div class="scan-grid"></div><div class="scan-frame"><div class="sc sc-tl"></div><div class="sc sc-tr"></div><div class="sc sc-bl"></div><div class="sc sc-br"></div><div class="scan-line"></div></div><div class="scan-hint">Scan the QR code on the bin</div></div>
-      <div class="err-banner" id="eb-loc"><div class="eb-icon">!</div><div class="eb-txt">Wrong location scanned. Navigate to <b>A-R01-S02-B03</b> and scan that bin's QR code.</div></div>
-      <div class="bot"><button class="cta cta-p" onclick="scanLocOk()">Simulate Correct Scan ✓</button><button class="cta-sec" onclick="scanLocBad()">Simulate Wrong Scan ✗</button></div>
-    </div>
-
-    <!-- PUT AWAY: PLACED -->
-    <div id="s6" class="screen">
-      <div class="topbar"><div style="width:36px"></div><div style="flex:1;text-align:center"><div class="tb-title">Item Placed ✓</div></div><div style="width:36px"></div></div>
-      <div class="success-full">
-        <div class="si grn"><svg width="36" height="36" fill="none" stroke="#0D7A4E" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
-        <div class="s-title">Placed Successfully</div>
-        <div class="s-sub">Augmentin 625mg confirmed at the correct bin location.</div>
-        <div class="s-card grn"><div class="sc-row"><span class="sc-k">Product</span><span class="sc-v">DP-00441</span></div><div class="sc-row"><span class="sc-k">Batch</span><span class="sc-v">BT-GSK-0881</span></div><div class="sc-row"><span class="sc-k">Location</span><span class="sc-v">A-R01-S02-B03</span></div><div class="sc-row"><span class="sc-k">Qty Placed</span><span class="sc-v">200 units</span></div></div>
-        <button class="cta cta-gr" style="width:100%;margin-bottom:10px" onclick="go('s2')">Place Next Item →</button>
-        <button class="cta-sec" onclick="go('s7')">Complete Task (demo)</button>
       </div>
     </div>
 
-    <!-- PUT AWAY: COMPLETE -->
-    <div id="s7" class="screen">
-      <div class="complete-full">
-        <div class="cc-icon"><svg width="38" height="38" fill="none" stroke="#0D7A4E" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
-        <div class="cc-title">Put Away Complete</div>
-        <div class="cc-sub">All 5 items in PA-000012 placed and confirmed. Inventory updated.</div>
-        <div class="cc-grid"><div class="cc-stat"><div class="cc-v">5</div><div class="cc-l">Items Placed</div></div><div class="cc-stat"><div class="cc-v">1</div><div class="cc-l">Invoice</div></div><div class="cc-stat"><div class="cc-v">09 Mar</div><div class="cc-l">Date</div></div><div class="cc-stat"><div class="cc-v">16:42</div><div class="cc-l">Completed</div></div></div>
-        <button class="cta cta-wh" style="width:100%" onclick="go('s1')">Back to Home</button>
-      </div>
-    </div>
+    <script>
+      var cur = "s0";
+      function go(id) {
+        if (id === cur) return;
+        var prev = document.getElementById(cur),
+          next = document.getElementById(id);
+        prev.classList.add("exit");
+        prev.classList.remove("active");
+        next.classList.add("active");
+        next.scrollTop = 0;
+        setTimeout(function () {
+          prev.classList.remove("exit");
+        }, 400);
+        cur = id;
+        if (id === "s5") {
+          document.getElementById("sw-loc").className = "scan-wrap";
+          document.getElementById("eb-loc").style.display = "none";
+        }
+        if (id === "p2") {
+          var sw = document.getElementById("sw-pick");
+          sw.className = "scan-wrap";
+          sw.querySelectorAll(".sc").forEach(function (el) {
+            el.style.borderColor = "var(--pk)";
+          });
+          document.getElementById("eb-pick").style.display = "none";
+        }
+      }
+      function sendOTP() {
+        var phone = document
+          .getElementById("phone-input")
+          .value.replace(/\D/g, "");
+        var error = document.getElementById("phone-error");
+        if (phone.length !== 10) {
+          error.textContent = "Please enter a valid 10-digit mobile number.";
+          error.style.display = "block";
+          return;
+        }
+        error.style.display = "none";
+        document.getElementById("otp-phone-display").textContent =
+          "+91 " + phone.replace(/(\d{5})(\d{5})/, "$1 $2");
+        document.querySelectorAll("#otp .otp-input").forEach(function (input) {
+          input.value = "";
+        });
+        go("otp");
+        setTimeout(function () {
+          document.querySelector("#otp .otp-input").focus();
+        }, 300);
+      }
+      function verifyOTP() {
+        var inputs = Array.from(document.querySelectorAll("#otp .otp-input"));
+        var otp = inputs
+          .map(function (input) {
+            return input.value.trim();
+          })
+          .join("");
+        var error = document.getElementById("otp-error");
+        if (otp.length !== 4 || /\D/.test(otp)) {
+          error.textContent = "Enter the 4-digit code sent to your phone.";
+          error.style.display = "block";
+          return;
+        }
+        error.style.display = "none";
+        go("s1");
+      }
+      function resendOTP() {
+        var error = document.getElementById("otp-error");
+        error.textContent =
+          "A new OTP has been sent. Please check your messages.";
+        error.style.display = "block";
+      }
+      function setupOtpInputs() {
+        var inputs = Array.from(document.querySelectorAll("#otp .otp-input"));
+        inputs.forEach(function (input, idx) {
+          input.addEventListener("input", function () {
+            if (this.value.length === 1 && idx < inputs.length - 1)
+              inputs[idx + 1].focus();
+          });
+          input.addEventListener("keydown", function (evt) {
+            if (evt.key === "Backspace" && !this.value && idx > 0)
+              inputs[idx - 1].focus();
+          });
+        });
+      }
+      setupOtpInputs();
+      function scanLocOk() {
+        var sw = document.getElementById("sw-loc");
+        sw.className = "scan-wrap ok";
+        document.getElementById("eb-loc").style.display = "none";
+        setTimeout(function () {
+          go("s6");
+        }, 700);
+      }
+      function scanLocBad() {
+        var sw = document.getElementById("sw-loc");
+        sw.className = "scan-wrap err";
+        document.getElementById("eb-loc").style.display = "flex";
+        shake(sw);
+      }
+      function pickScanOk() {
+        var sw = document.getElementById("sw-pick");
+        sw.className = "scan-wrap ok";
+        document.getElementById("eb-pick").style.display = "none";
+        setTimeout(function () {
+          go("p3");
+        }, 700);
+      }
+      function pickScanBad() {
+        var sw = document.getElementById("sw-pick");
+        sw.className = "scan-wrap err";
+        document.getElementById("eb-pick").style.display = "flex";
+        shake(sw);
+      }
+      function shake(el) {
+        el.style.animation = "shk .4s ease";
+        setTimeout(function () {
+          el.style.animation = "";
+        }, 400);
+      }
+      var s = document.createElement("style");
+      s.textContent =
+        "@keyframes shk{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}";
+      document.head.appendChild(s);
 
-    <!-- PICKING: ORDER DETAIL -->
-    <div id="p1" class="screen">
-      <div class="topbar">
-        <button class="back-btn" onclick="go('s1')"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
-        <div style="flex:1"><div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><div class="tb-title">ORD-004821</div><div class="ot ot-hl">HL</div><div class="ttb ttb-pk">Picking</div></div></div>
-      </div>
-      <div class="info-strip">
-        <div class="is-row"><span class="is-k">Order ID</span><span class="is-v">ORD-004821</span></div>
-        <div class="is-row"><span class="is-k">Order Type</span><span class="is-v">HL</span></div>
-        <div class="is-row"><span class="is-k">Assigned</span><span class="is-v">03:22 PM, 09 Mar 2025</span></div>
-        <div class="is-row"><span class="is-k">Total SKUs</span><span class="is-v">3 items</span></div>
-        <div class="is-row"><span class="is-k">Progress</span><span class="is-v" style="color:var(--g500)">0 / 3 picked</span></div>
-      </div>
-      <div class="sec-lbl" style="padding-top:12px">Items to Pick</div>
-      <div class="prod-list">
-        <div class="pr pk-h" onclick="go('p2')"><div class="pr-dot p"></div><div class="pr-info"><div class="pr-name">Dolo 650mg Tablet</div><div class="pr-sub">B-R02-S01-B04 · DP-00091</div></div><div class="pr-qty">2</div><svg width="14" height="14" fill="none" stroke="#9CA3AF" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
-        <div class="pr pk-h" onclick="go('p2')"><div class="pr-dot p"></div><div class="pr-info"><div class="pr-name">Cetirizine 10mg Tablet</div><div class="pr-sub">A-R03-S02-B01 · DP-00204</div></div><div class="pr-qty">1</div><svg width="14" height="14" fill="none" stroke="#9CA3AF" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
-        <div class="pr pk-h" onclick="go('p2')"><div class="pr-dot p"></div><div class="pr-info"><div class="pr-name">Volini Spray 55g</div><div class="pr-sub">C-R01-S03-B02 · DP-00318</div></div><div class="pr-qty">1</div><svg width="14" height="14" fill="none" stroke="#9CA3AF" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
-      </div>
-      <div class="bot"><button class="cta cta-pk" onclick="go('p2')"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Start Picking</button></div>
-    </div>
-
-    <!-- PICKING: SCAN PRODUCT -->
-    <div id="p2" class="screen">
-      <div class="topbar"><button class="back-btn" onclick="go('p1')"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button><div><div class="tb-title">Scan Product</div></div></div>
-      <div class="step-bar"><span class="sbar-step pk">Step 1 of 2</span><div class="sbar-div"></div><span class="sbar-lbl">Navigate, pick & scan product</span><div class="sbar-dots"><div class="sdot on pk"></div><div class="sdot"></div></div></div>
-      
-      <div class="loc-card pk"><div class="lc-glow"></div><div class="lc-lbl">Go to this location</div><div class="lc-name">B-R02-S01-B04</div><div class="lc-chips"><div class="lc-chip">Aisle B</div><div class="lc-chip">Rack 02</div><div class="lc-chip">Shelf 01</div><div class="lc-chip">Bin 04</div></div></div>
-      <div class="prod-img">
-        <div class="prod-img-box"><svg width="30" height="30" fill="none" stroke="var(--pk)" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
-        <div><div class="pii-name">Dolo 650mg Tablet</div><div class="pii-meta">Strip of 15 Tablets &nbsp;·&nbsp; Micro Labs Ltd.</div></div>
-      </div>
-      <div class="scan-wrap" id="sw-pick">
-        <div class="scan-grid"></div>
-        <div class="scan-frame">
-          <div class="sc sc-tl" style="border-color:var(--pk)"></div><div class="sc sc-tr" style="border-color:var(--pk)"></div>
-          <div class="sc sc-bl" style="border-color:var(--pk)"></div><div class="sc sc-br" style="border-color:var(--pk)"></div>
-          <div class="scan-line pk"></div>
-        </div>
-        <div class="scan-hint">Scan the QR label on the product</div>
-      </div>
-      <div class="err-banner" id="eb-pick"><div class="eb-icon">!</div><div class="eb-txt">Wrong product scanned. Please find <b>Dolo 650mg Tablet (DP-00091)</b> and scan its QR label.</div></div>
-            <div class="bot"><button class="cta-sec pk" onclick="showBatchModal()">Can't scan — enter manually</button></div>
-      <div class="bot"><button class="cta cta-pk" onclick="pickScanOk()">Simulate Correct Scan ✓</button><button class="cta-sec pk" onclick="pickScanBad()">Simulate Wrong Product ✗</button></div>
-    </div>
-
-    <!-- PICKING: CONFIRM ITEM -->
-    <div id="p3" class="screen">
-      <div class="topbar"><button class="back-btn" onclick="go('p2')"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button><div><div class="tb-title">Confirm Pick</div></div></div>
-      <div class="step-bar"><span class="sbar-step pk">Step 2 of 2</span><div class="sbar-div"></div><span class="sbar-lbl">Verify &amp; confirm the item</span><div class="sbar-dots"><div class="sdot"></div><div class="sdot on pk"></div></div></div>
-      <div class="prod-img" style="margin-top:14px">
-        <div class="prod-img-box" style="background:var(--green-l);border-color:rgba(13,122,78,.1)"><svg width="30" height="30" fill="none" stroke="var(--green)" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
-        <div><div class="pii-name">Dolo 650mg Tablet</div><div class="pii-meta" style="color:var(--green);font-weight:600">✓ Product verified</div></div>
-      </div>
-      <div class="pdc">
-        <div class="pdc-row"><span class="pdc-k">DP-ID</span><span class="pdc-v">DP-00091</span></div>
-        <div class="pdc-row"><span class="pdc-k">Batch (from QR)</span><span class="pdc-v" style="color:var(--green)">BT-MCL-2241</span></div>
-        <div class="pdc-row"><span class="pdc-k">Expiry (from QR)</span><span class="pdc-v" style="color:var(--green)">2027-03</span></div>
-        <div class="pdc-row"><span class="pdc-k">Qty Required</span><span class="pdc-v">2 units</span></div>
-        <div class="pdc-row"><span class="pdc-k">Scan Progress</span><span class="pdc-v" style="color:var(--pk)">1 of 2 scanned</span></div>
-      </div>
-      <div style="margin:10px 14px 0;background:var(--pk-l);border:1px solid rgba(192,86,33,.15);border-radius:12px;padding:13px;font-size:13px;color:var(--pk-d);font-weight:500;line-height:1.5">This item requires <b>2 units.</b> Scan the product QR one more time for the second unit.</div>
-      <div class="bot"><button class="cta cta-pk" onclick="go('p4')">Scan Second Unit →</button></div>
-    </div>
-
-    <!-- PICKING: REVIEW -->
-    <div id="p4" class="screen">
-      <div class="topbar"><button class="back-btn" onclick="go('p3')"><svg width="16" height="16" fill="none" stroke="#374151" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button><div><div class="tb-title">Review &amp; Confirm</div></div></div>
-      <div style="margin:14px 14px 0;background:var(--pk-l);border-radius:12px;padding:13px;display:flex;align-items:center;gap:9px;border:1px solid rgba(192,86,33,.15)"><svg width="18" height="18" fill="none" stroke="var(--pk)" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><span style="font-size:13px;color:var(--pk);font-weight:600">All 3 items picked — review before confirming</span></div>
-      <div class="review-card">
-        <div class="rc-title">Picked Items Summary</div>
-        <div class="rc-row"><div class="rc-prod">Dolo 650mg Tablet <span style="color:var(--g300)">×2</span></div><div class="rc-detail">BT-MCL-2241 · 2027-03</div></div>
-        <div class="rc-row"><div class="rc-prod">Cetirizine 10mg Tablet <span style="color:var(--g300)">×1</span></div><div class="rc-detail">BT-SUN-0918 · 2026-11</div></div>
-        <div class="rc-row"><div class="rc-prod">Volini Spray 55g <span style="color:var(--g300)">×1</span></div><div class="rc-detail">BT-SHL-0042 · 2027-06</div></div>
-      </div>
-      <div style="margin:10px 14px 0;background:#FEF3C7;border:1px solid rgba(180,83,9,.15);border-radius:12px;padding:13px;font-size:13px;color:#92400E;line-height:1.5">After confirming, an invoice will be auto-generated in WMS. Print it from WMS and attach to the packed package.</div>
-      <div class="bot"><button class="cta cta-pk" onclick="go('p5')"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Confirm All Picked</button></div>
-    </div>
-
-    <!-- PICKING: INVOICE -->
-    <div id="p5" class="screen">
-      <div class="topbar"><div style="width:36px"></div><div style="flex:1;text-align:center"><div class="tb-title">Invoice Generated</div></div><div style="width:36px"></div></div>
-      <div class="success-full">
-        <div class="si pk"><svg width="36" height="36" fill="none" stroke="var(--pk)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
-        <div class="s-title">All Items Picked</div>
-        <div class="s-sub">Invoice INV-ORD-004821 generated in WMS. Print and attach to package.</div>
-        <div class="s-card pk"><div class="sc-row"><span class="sc-k">Order ID</span><span class="sc-v">ORD-004821</span></div><div class="sc-row"><span class="sc-k">Invoice</span><span class="sc-v">INV-ORD-004821</span></div><div class="sc-row"><span class="sc-k">Items</span><span class="sc-v">3 SKUs · 4 units</span></div><div class="sc-row"><span class="sc-k">Order Type</span><span class="sc-v">HL</span></div></div>
-        <div style="width:100%;background:var(--pk-l);border-radius:12px;padding:14px;border:1px solid rgba(192,86,33,.15);margin-bottom:18px;text-align:left">
-          <div style="font-size:12px;font-weight:700;color:var(--pk);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">Next Steps</div>
-          <div style="font-size:14px;color:var(--pk-d);line-height:1.8">1. Go to WMS → print invoice<br>2. Pack all items<br>3. Attach invoice to package<br>4. Hand over to delivery rider</div>
-        </div>
-        <button class="cta cta-gr" style="width:100%;margin-bottom:10px" onclick="go('p6')">Mark as Handed Over →</button>
-      </div>
-    </div>
-
-    <!-- PICKING: COMPLETE -->
-    <div id="p6" class="screen">
-      <div class="complete-full">
-        <div class="cc-icon"><svg width="38" height="38" fill="none" stroke="#0D7A4E" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
-        <div class="cc-title">Order Dispatched</div>
-        <div class="cc-sub">ORD-004821 packed and handed to the delivery rider.</div>
-        <div class="cc-grid"><div class="cc-stat"><div class="cc-v">3</div><div class="cc-l">SKUs Picked</div></div><div class="cc-stat"><div class="cc-v">HL</div><div class="cc-l">Order Type</div></div><div class="cc-stat"><div class="cc-v">09 Mar</div><div class="cc-l">Date</div></div><div class="cc-stat"><div class="cc-v">15:38</div><div class="cc-l">Dispatched</div></div></div>
-        <button class="cta cta-wh" style="width:100%" onclick="go('s1')">Back to Home</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- BATCH SELECTION MODAL -->
-<div id="batch-modal" class="modal" style="display:none">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3>Select Batch</h3>
-      <button class="modal-close" onclick="hideBatchModal()">&times;</button>
-    </div>
-    <div class="modal-body">
-      <label for="batch-select">Choose Batch:</label>
-      <select id="batch-select" onchange="updateExpiry()">
-        <option value="">Select a batch</option>
-        <option value="BT-MCL-2241">BT-MCL-2241</option>
-        <option value="BT-SUN-0918">BT-SUN-0918</option>
-        <option value="BT-SHL-0042">BT-SHL-0042</option>
-      </select>
-      <div class="expiry-display">
-        <label>Expiry Date:</label>
-        <span id="expiry-date">-</span>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="cta cta-wh" onclick="confirmBatch()">Confirm</button>
-    </div>
-  </div>
-</div>
-
-<script>
-var cur = 's1';
-function go(id) {
-  if (id === cur) return;
-  var prev = document.getElementById(cur), next = document.getElementById(id);
-  prev.classList.add('exit'); prev.classList.remove('active');
-  next.classList.add('active'); next.scrollTop = 0;
-  setTimeout(function(){ prev.classList.remove('exit'); }, 400);
-  cur = id;
-  if (id === 's5') { document.getElementById('sw-loc').className = 'scan-wrap'; document.getElementById('eb-loc').style.display = 'none'; }
-  if (id === 'p2') {
-    var sw = document.getElementById('sw-pick');
-    sw.className = 'scan-wrap';
-    sw.querySelectorAll('.sc').forEach(function(el){ el.style.borderColor = 'var(--pk)'; });
-    document.getElementById('eb-pick').style.display = 'none';
-  }
-}
-function scanLocOk() {
-  var sw = document.getElementById('sw-loc'); sw.className = 'scan-wrap ok';
-  document.getElementById('eb-loc').style.display = 'none';
-  setTimeout(function(){ go('s6'); }, 700);
-}
-function scanLocBad() {
-  var sw = document.getElementById('sw-loc'); sw.className = 'scan-wrap err';
-  document.getElementById('eb-loc').style.display = 'flex'; shake(sw);
-}
-function pickScanOk() {
-  var sw = document.getElementById('sw-pick'); sw.className = 'scan-wrap ok';
-  document.getElementById('eb-pick').style.display = 'none';
-  setTimeout(function(){ go('p3'); }, 700);
-}
-function pickScanBad() {
-  var sw = document.getElementById('sw-pick'); sw.className = 'scan-wrap err';
-  document.getElementById('eb-pick').style.display = 'flex'; shake(sw);
-}
-function shake(el) { el.style.animation = 'shk .4s ease'; setTimeout(function(){ el.style.animation = ''; }, 400); }
-var s = document.createElement('style');
-s.textContent = '@keyframes shk{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}';
-document.head.appendChild(s);
-
-// Modal functions
-function showBatchModal() {
-  document.getElementById('batch-modal').style.display = 'flex';
-  document.getElementById('batch-select').value = '';
-  document.getElementById('expiry-date').textContent = '-';
-}
-function hideBatchModal() {
-  document.getElementById('batch-modal').style.display = 'none';
-}
-function updateExpiry() {
-  var batch = document.getElementById('batch-select').value;
-  var expiry = '';
-  if (batch === 'BT-MCL-2241') expiry = '2027-03';
-  else if (batch === 'BT-SUN-0918') expiry = '2026-11';
-  else if (batch === 'BT-SHL-0042') expiry = '2027-06';
-  document.getElementById('expiry-date').textContent = expiry;
-}
-function confirmBatch() {
-  var batch = document.getElementById('batch-select').value;
-  if (!batch) { alert('Please select a batch.'); return; }
-  // Here you can add logic to use the selected batch and expiry
-  alert('Batch ' + batch + ' confirmed!');
-  hideBatchModal();
-}
-</script>
-</body>
+      // Modal functions
+      function showBatchModal() {
+        document.getElementById("batch-modal").style.display = "flex";
+        document.getElementById("batch-select").value = "";
+        document.getElementById("expiry-date").textContent = "-";
+      }
+      function hideBatchModal() {
+        document.getElementById("batch-modal").style.display = "none";
+      }
+      function updateExpiry() {
+        var batch = document.getElementById("batch-select").value;
+        var expiry = "";
+        if (batch === "BT-MCL-2241") expiry = "2027-03";
+        else if (batch === "BT-SUN-0918") expiry = "2026-11";
+        else if (batch === "BT-SHL-0042") expiry = "2027-06";
+        document.getElementById("expiry-date").textContent = expiry;
+      }
+      function confirmBatch() {
+        var batch = document.getElementById("batch-select").value;
+        if (!batch) {
+          alert("Please select a batch.");
+          return;
+        }
+        // Here you can add logic to use the selected batch and expiry
+        alert("Batch " + batch + " confirmed!");
+        hideBatchModal();
+      }
+    </script>
+  </body>
 </html>
